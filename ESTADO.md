@@ -39,6 +39,7 @@
 
 ## Bitácora (más reciente arriba)
 
+- **2026-11-16** — Proyecto subido a GitHub, repo **privado**: https://github.com/Chagotrades/Ascensus-science. Fuera del repo (por `.gitignore`): PDFs del profesor, entregables generados (videos/PNG grandes) y las carpetas `sitio/` y `despliegue/`. Sitio armado para Netlify (subido por Santiago con Netlify Drop, visibilidad pública por link + noindex).
 - **2026-11-16** — Demo Ag-TiO₂ publicada como Artifact privado en claude.ai: https://claude.ai/artifact/D3uAYsonp8cq5xJZbAM1e1 (solo Santiago la ve hasta compartirla desde el menú Share). Paquete reproducible con `python herramientas/empaquetar_demo.py ag-tio2` → `despliegue/ag-tio2/`. La página del investigador NO se publicó así (los videos superan el límite de 15 MB por archivo): sigue pendiente un hosting propio de Ascensus.
 - **2026-11-16** — Segundo bug visto por Santiago: si la demo carga con el panel oculto (tamaño 0×0), la cámara quedaba inválida y el texto del panel invisible. Corregido y probado cargando en 0×0 y agrandando después.
 - **2026-11-16** — Bug en la demo detectado por Santiago ("no carga / 3D bugeado"): el bucle de animación pasaba la hora como paso de tiempo → reloj disparado y cámara en NaN. Corregido. Además: la cámara ya no entra en la esfera al girarla, la esfera está rellena de partículas con poros finos (antes era hueca y tenía un cráter). Entregables re-exportados con la versión corregida.
