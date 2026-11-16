@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research Visuals · Dr. Pugazhenthiran Nalandhiran</title>
+<meta name="description" content="Visual and interactive versions of research by Dr. Pugazhenthiran Nalandhiran on photocatalytic water treatment.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050a14; --bg-2: #0a1426; --card: #0b1730; --linea: rgba(160,190,230,.14);
+  --texto: #e8eef8; --texto-2: #9fb0c8; --acento: #7cc4ff; --acento-2: #3da5ff; --oro: #ffcf7a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--texto); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.envoltura { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+.borrador { background: #1b2a10; color: #d7f0a8; font-size: 13px; text-align: center; padding: 8px 16px; border-bottom: 1px solid rgba(215,240,168,.2); }
+header.top { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+.marca { font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+.marca span { color: var(--texto-2); font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin-left: 8px; }
+nav.top a { color: var(--texto-2); text-decoration: none; font-size: 14px; margin-left: 22px; }
+nav.top a:hover { color: var(--texto); }
+
+.perfil { padding: 56px 0 40px; }
+.kicker { font: 500 12px/1 "JetBrains Mono", ui-monospace, monospace; color: var(--acento); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 16px; }
+.perfil h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 14px; font-weight: 700; }
+.perfil .afil { color: var(--texto-2); margin: 0 0 22px; font-size: 17px; }
+.etiquetas { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.etiquetas li { border: 1px solid var(--linea); border-radius: 999px; padding: 5px 12px; font-size: 13px; color: #cdd8e8; background: rgba(255,255,255,.02); }
+
+/* Paper destacado */
+.destacado { margin: 24px 0 72px; border: 1px solid var(--linea); border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, var(--card), var(--bg-2)); }
+.destacado-hero { position: relative; aspect-ratio: 16 / 7; overflow: hidden; background: #070d1a; }
+.destacado-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block; }
+.destacado-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,10,20,.92) 0%, rgba(5,10,20,.55) 45%, rgba(5,10,20,0) 75%); }
+.destacado-texto { position: absolute; z-index: 1; left: 40px; bottom: 40px; max-width: 520px; }
+.chip { display: inline-block; font: 500 11.5px/1 "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: #04101f; background: var(--acento); border-radius: 6px; padding: 6px 8px; margin-bottom: 14px; }
+.destacado h2 { font-size: clamp(22px, 2.6vw, 32px); line-height: 1.18; margin: 0 0 10px; letter-spacing: -.01em; text-wrap: balance; }
+.ref { color: var(--texto-2); font-size: 14px; margin: 0 0 22px; }
+.ref a { color: var(--texto-2); }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; padding: 12px 18px; font: 600 15px Inter, sans-serif; text-decoration: none; transition: transform .2s, background .2s, box-shadow .2s; cursor: pointer; border: 0; }
+.btn-1 { background: linear-gradient(135deg, var(--acento-2), var(--acento)); color: #04101f; box-shadow: 0 10px 30px rgba(61,165,255,.28); }
+.btn-1:hover { transform: translateY(-1px); box-shadow: 0 14px 36px rgba(61,165,255,.38); }
+.btn-2 { background: rgba(255,255,255,.06); color: var(--texto); border: 1px solid var(--linea); }
+.btn-2:hover { background: rgba(124,196,255,.12); }
+.btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.destacado-cuerpo { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; padding: 40px; }
+.destacado-cuerpo h3 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--texto-2); margin: 0 0 14px; font-weight: 600; }
+.resumen p { margin: 0 0 12px; color: #cdd8e8; }
+.numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.num { border: 1px solid var(--linea); border-radius: 16px; padding: 16px 18px; background: rgba(255,255,255,.02); }
+.num b { display: block; font-size: 34px; line-height: 1; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.num span { display: block; color: var(--texto-2); font-size: 13.5px; margin-top: 8px; }
+.num.mejor b { color: var(--acento); }
+video { width: 100%; border-radius: 16px; border: 1px solid var(--linea); display: block; background: #000; }
+.video-pie { font-size: 13px; color: var(--texto-2); margin: 8px 0 0; }
+
+/* Descargas */
+.seccion { margin: 0 0 72px; }
+.seccion > h2 { font-size: 26px; letter-spacing: -.01em; margin: 0 0 8px; }
+.seccion > p.bajada { color: var(--texto-2); margin: 0 0 28px; max-width: 42em; }
+.grilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.recurso { border: 1px solid var(--linea); border-radius: 18px; overflow: hidden; background: var(--card); display: flex; flex-direction: column; text-decoration: none; transition: transform .2s, border-color .2s; }
+.recurso:hover { transform: translateY(-2px); border-color: rgba(124,196,255,.4); }
+.recurso:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+.recurso-img { aspect-ratio: 3 / 2; background: #070d1a; overflow: hidden; }
+.recurso-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.recurso-txt { padding: 16px 18px 18px; }
+.recurso-txt b { display: block; font-size: 16px; margin-bottom: 4px; }
+.recurso-txt span { display: block; font-size: 13.5px; color: var(--texto-2); }
+.recurso-txt .fmt { font: 500 11.5px "JetBrains Mono", monospace; color: var(--acento); margin-top: 10px; }
+
+/* Próximos */
+.proximos .recurso { opacity: .78; }
+.proximos .recurso-img { display: grid; place-items: center; font: 500 12px "JetBrains Mono", monospace; color: var(--texto-2); letter-spacing: .1em; text-transform: uppercase;
+  background: repeating-linear-gradient(135deg, rgba(124,196,255,.05) 0 10px, transparent 10px 20px), #070d1a; }
+
+footer { border-top: 1px solid var(--linea); padding: 28px 0 48px; color: var(--texto-2); font-size: 13.5px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .destacado-cuerpo { grid-template-columns: 1fr; padding: 24px; gap: 28px; }
+  .grilla { grid-template-columns: 1fr 1fr; }
+  .destacado-hero { aspect-ratio: auto; min-height: 520px; }
+  .destacado-hero img { position: absolute; inset: 0; object-position: 70% 30%; }
+  .destacado-hero::after { background: linear-gradient(0deg, rgba(5,10,20,.96) 0%, rgba(5,10,20,.7) 50%, rgba(5,10,20,.1) 100%); }
+  .destacado-texto { left: 24px; right: 24px; bottom: 24px; }
+  nav.top { display: none; }
+}
+@media (max-width: 560px) { .grilla { grid-template-columns: 1fr; } .envoltura { padding: 0 16px; } .numeros { grid-template-columns: 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="borrador" role="note">Private draft prepared by Ascensus Science Visuals for Dr. Pugazhenthiran's review · not public</div>
+
+<div class="envoltura">
+  <header class="top">
+    <a class="marca" href="#nombre">Ascensus<span>Research Visuals</span></a>
+    <nav class="top" aria-label="Sections">
+      <a href="#paper">Featured paper</a>
+      <a href="#recursos">Downloads</a>
+      <a href="#proximos">Next</a>
+    </nav>
+  </header>
+
+  <section class="perfil" aria-labelledby="nombre">
+    <p class="kicker">Research visuals</p>
+    <h1 id="nombre">Dr. Pugazhenthiran Nalandhiran</h1>
+    <p class="afil">Department of Chemistry · Universidad Técnica Federico Santa María, Chile</p>
+    <ul class="etiquetas" aria-label="Research topics">
+      <li>Photocatalysis</li><li>Plasmonic Ag / Au–TiO₂</li><li>Advanced oxidation</li><li>Antibiotics in water</li><li>Solar water treatment</li>
+    </ul>
+  </section>
+
+  <article class="destacado" id="paper" aria-labelledby="paper-t">
+    <div class="destacado-hero">
+      <img src="../../entregas/ag-tio2/web/render-nanoesfera.webp" alt="3D render of a porous Ag–TiO₂ nanosphere built from anatase nanoparticles and decorated with silver nanoparticles" width="2000" height="1333" fetchpriority="high">
+      <div class="destacado-texto">
+        <span class="chip">Interactive paper</span>
+        <h2 id="paper-t">Photocatalytic oxidation of ceftiofur sodium using plasmonic porous Ag-TiO₂ nanospheres</h2>
+        <p class="ref"><i>J. Ind. Eng. Chem.</i> 105 (2022) 384–392 · <a href="https://doi.org/10.1016/j.jiec.2021.09.038" target="_blank" rel="noopener">doi:10.1016/j.jiec.2021.09.038</a></p>
+        <div class="botones">
+          <a class="btn btn-1" href="../../demos/ag-tio2/?volver=../../paginas/pugazhenthiran/">Explore in 3D <span aria-hidden="true">→</span></a>
+          <a class="btn btn-2" href="#video">Watch the 1-minute video</a>
+        </div>
+      </div>
+    </div>
+    <div class="destacado-cuerpo">
+      <div class="resumen">
+        <h3>In one minute</h3>
+        <p>Porous anatase TiO₂ nanospheres (~250 nm), built from ~10 nm particles and decorated with 3–4 nm plasmonic silver, oxidize the antibiotic ceftiofur under white light.</p>
+        <p>Silver traps the photo-generated electrons, so the holes survive long enough to form hydroxyl radicals that break the antibiotic down into non-toxic products.</p>
+        <div class="numeros">
+          <div class="num mejor"><b>92%</b><span>ceftiofur oxidized in 90 min with porous Ag–TiO₂</span></div>
+          <div class="num"><b>71%</b><span>with Ag on commercial TiO₂ (P25), same conditions</span></div>
+        </div>
+      </div>
+      <div id="video">
+        <h3>Mechanism video</h3>
+        <video controls preload="metadata" poster="../../entregas/ag-tio2/web/render-nanoesfera.webp" playsinline>
+          <source src="../../entregas/ag-tio2/video-mecanismo-ligero.mp4" type="video/mp4">
+        </video>
+        <p class="video-pie">English captions burned in · ready for talks, classes and social media.</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="seccion" id="recursos" aria-labelledby="recursos-t">
+    <h2 id="recursos-t">Ready-to-use assets</h2>
+    <p class="bajada">Made from the same 3D scene, so every format matches. Free to use in talks, classes, reports and social media, with the credit "Visual: Ascensus Science Visuals".</p>
+    <div class="grilla">
+      <a class="recurso" href="../../entregas/ag-tio2/figura-mecanismo.png" download>
+        <div class="recurso-img"><img src="../../entregas/ag-tio2/web/figura-mecanismo.webp" alt="Labelled mechanism figure" loading="lazy"></div>
+        <div class="recurso-txt"><b>Mechanism figure</b><span>Labelled, for slides and reports</span><span class="fmt">PNG · 3600×2400</span></div>
+      </a>
+      <a class="recurso" href="../../entregas/ag-tio2/figura-mecanismo-limpia.png" download>
+        <div class="recurso-img"><img src="../../entregas/ag-tio2/web/figura-mecanismo-limpia.webp" alt="Mechanism figure without labels" loading="lazy"></div>
+        <div class="recurso-txt"><b>Clean figure</b><span>No labels, to annotate your own way</span><span class="fmt">PNG · 3600×2400</span></div>
+      </a>
+      <a class="recurso" href="../../entregas/ag-tio2/graphical-abstract.png" download>
+        <div class="recurso-img"><img src="../../entregas/ag-tio2/web/graphical-abstract.webp" alt="Graphical abstract in Elsevier format" loading="lazy" style="object-fit:contain"></div>
+        <div class="recurso-txt"><b>Graphical abstract</b><span>Elsevier format (2× minimum size)</span><span class="fmt">PNG · 2656×1062 + 1328×531</span></div>
+      </a>
+      <a class="recurso" href="../../entregas/ag-tio2/video-mecanismo.mp4" download>
+        <div class="recurso-img"><img src="../../entregas/ag-tio2/web/render-nanoesfera.webp" alt="" loading="lazy"></div>
+        <div class="recurso-txt"><b>Video, full quality</b><span>For conferences and projection</span><span class="fmt">MP4 · 1080p · 53 s</span></div>
+      </a>
+      <a class="recurso" href="../../entregas/ag-tio2/carrusel/carrusel-linkedin.pdf" download>
+        <div class="recurso-img"><img src="../../entregas/ag-tio2/web/carrusel-lamina-1.webp" alt="First slide of the LinkedIn carousel" loading="lazy" style="object-position:50% 20%"></div>
+        <div class="recurso-txt"><b>LinkedIn carousel</b><span>6 slides + suggested post text</span><span class="fmt">PDF · 6 slides 1080×1350</span></div>
+      </a>
+      <a class="recurso" href="../../demos/ag-tio2/?volver=../../paginas/pugazhenthiran/">
+        <div class="recurso-img"><img src="../../entregas/ag-tio2/web/figura-mecanismo-limpia.webp" alt="" loading="lazy" style="object-position:40% 60%"></div>
+        <div class="recurso-txt"><b>Interactive 3D</b><span>Opens in any browser, also on phones</span><span class="fmt">Web link</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="seccion proximos" id="proximos" aria-labelledby="proximos-t">
+    <h2 id="proximos-t">What could come next</h2>
+    <p class="bajada">Ideas to discuss. Each new paper can get the same treatment from day one: graphical abstract for submission, cover proposal, video and interactive page.</p>
+    <div class="grilla">
+      <div class="recurso"><div class="recurso-img">Idea</div><div class="recurso-txt"><b>Your next paper</b><span>Graphical abstract + journal cover proposal at submission</span></div></div>
+      <div class="recurso"><div class="recurso-img">Idea</div><div class="recurso-txt"><b>Solar photocatalytic reactor</b><span>FONDECYT 1240601: an interactive "vision" piece of the reactor</span></div></div>
+      <div class="recurso"><div class="recurso-img">Idea</div><div class="recurso-txt"><b>Ag–TiO₂ nanotubes (2013)</b><span>High-surface-area nanotubes against ceftiofur</span></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Visuals by Ascensus Science Visuals · Scientific content pending validation by the author</span>
+    <span>Draft v0.1 · November 2026</span>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# PDFs del profesor: nunca salen de este equipo (CLAUDE.md: "no compartir fuera")
+papers/*
+!papers/README.md
+
+# Entregables generados (videos de 26–89 MB, PNG de 8 MB): se regeneran con ?exportar=…
+# Ver entregas/ag-tio2/README.md
+entregas/**
+!entregas/
+!entregas/*/
+!entregas/*/README.md
+
+# Carpetas que arman los scripts (herramientas/armar_sitio.py, empaquetar_demo.py)
+sitio/
+despliegue/
+
+# Sistema
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.netlify/
+node_modules/

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ag–TiO₂ Interactive Paper</title>
+<meta name="description" content="Interactive 3D explainer: how porous Ag–TiO₂ nanospheres oxidize the antibiotic ceftiofur under light.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+<div id="fondo" aria-hidden="true"></div>
+<div id="lienzo" aria-hidden="true"></div>
+<div id="etiquetas" aria-hidden="true"></div>
+
+<a class="volver" id="volver" href="#" data-inicio="../../paginas/pugazhenthiran/" hidden><span aria-hidden="true">←</span> Back</a>
+
+<header class="marca">
+  <span class="marca-logo">Ascensus</span><span class="marca-sub">Science Visuals</span>
+</header>
+
+<aside class="leyenda" id="leyenda" aria-label="Legend">
+  <div class="ley" data-desde="0"><i class="mol"></i>Ceftiofur <small>(antibiotic)</small></div>
+  <div class="ley" data-desde="1"><i class="tio2"></i>TiO₂ (anatase)</div>
+  <div class="ley" data-desde="1"><i class="ag"></i>Ag nanoparticle</div>
+  <div class="ley" data-desde="2"><i class="luz"></i>UV–visible light</div>
+  <div class="ley" data-desde="3"><i class="carga e">e⁻</i>Electron</div>
+  <div class="ley" data-desde="3"><i class="carga h">h⁺</i>Hole</div>
+  <div class="ley" data-desde="5"><i class="carga oh">•OH</i>Hydroxyl radical</div>
+  <div class="ley" data-desde="5"><i class="carga o2">O₂</i>Superoxide <small>(see notes)</small></div>
+</aside>
+
+<figure class="bandas" id="bandas" aria-label="Energy band diagram">
+  <svg viewBox="0 0 260 190" role="img" aria-labelledby="bandas-t">
+    <title id="bandas-t">Band diagram: TiO₂ conduction and valence bands with Ag</title>
+    <defs>
+      <marker id="fl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+    </defs>
+    <text x="10" y="14" class="b-tit">TiO₂ (anatase)</text>
+    <rect x="10" y="26" width="130" height="22" rx="3" class="b-cb"/>
+    <text x="100" y="41" class="b-lab">Conduction band</text>
+    <rect x="10" y="138" width="130" height="22" rx="3" class="b-vb"/>
+    <text x="100" y="153" class="b-lab">Valence band</text>
+    <line x1="150" y1="48" x2="150" y2="138" class="b-gap"/>
+    <text x="155" y="104" class="b-num">E<tspan baseline-shift="sub" font-size="7">g</tspan></text><text x="155" y="116" class="b-num">≈3.2 eV*</text>
+    <!-- excitación -->
+    <g class="b-paso b3">
+      <line x1="55" y1="134" x2="55" y2="54" class="b-flecha luz" marker-end="url(#fl)"/>
+      <path d="M30,108 q-8,-8 0,-16 q8,-8 0,-16" class="b-onda"/>
+      <circle cx="55" cy="40" r="7" class="b-e"/><text x="55" y="43" class="b-sim">e⁻</text>
+      <circle cx="55" cy="149" r="7" class="b-h"/><text x="55" y="152" class="b-sim">h⁺</text>
+    </g>
+    <g class="b-paso b3x">
+      <path d="M68,52 C100,80 100,110 68,136" class="b-flecha rec" marker-end="url(#fl)"/>
+      <text x="100" y="98" class="b-mini">recombination</text>
+    </g>
+    <!-- Ag -->
+    <g class="b-paso b4">
+      <rect x="200" y="50" width="48" height="56" rx="4" class="b-ag"/>
+      <text x="224" y="66" class="b-lab oscuro">Ag</text>
+      <line x1="204" y1="80" x2="244" y2="80" class="b-ef"/>
+      <text x="224" y="96" class="b-mini oscuro">E<tspan baseline-shift="sub" font-size="6">F</tspan></text>
+      <path d="M140,37 C175,37 185,70 201,78" class="b-flecha e" marker-end="url(#fl)"/>
+      <line x1="96" y1="86" x2="112" y2="104" class="b-cruz"/><line x1="112" y1="86" x2="96" y2="104" class="b-cruz"/>
+    </g>
+    <!-- radicales -->
+    <g class="b-paso b5">
+      <path d="M62,160 C70,178 100,182 120,178" class="b-flecha h" marker-end="url(#fl)"/>
+      <text x="124" y="181" class="b-eq">H₂O → •OH</text>
+      <path d="M248,94 C256,110 256,124 246,132" class="b-flecha o2 dash" marker-end="url(#fl)"/>
+      <text x="246" y="146" class="b-eq peq" text-anchor="end">O₂ → O₂•⁻ ?</text>
+    </g>
+  </svg>
+  <figcaption>*Typical literature value for anatase. Schematic, not to scale.</figcaption>
+</figure>
+
+<main class="panel" id="panel">
+  <div class="panel-cab">
+    <span class="paso-num" id="paso-num">01 / 08</span>
+    <span class="paso-kicker" id="paso-kicker">The problem</span>
+  </div>
+  <h1 id="paso-titulo">Antibiotics that stay in the water</h1>
+  <div id="paso-texto" class="paso-texto"></div>
+
+  <div class="resultado" id="resultado" hidden>
+    <p class="res-tit">Ceftiofur oxidized after 90 min of white-light irradiation</p>
+    <div class="barra"><span class="barra-nom">Porous Ag–TiO₂ nanospheres</span><div class="barra-pista"><div class="barra-relleno uno" style="--v:.92"></div></div><span class="barra-val">92%</span></div>
+    <div class="barra"><span class="barra-nom">Ag on commercial TiO₂ (P25)</span><div class="barra-pista"><div class="barra-relleno dos" style="--v:.71"></div></div><span class="barra-val">71%</span></div>
+    <p class="res-pie">Oxidation products were found to be non-toxic compared with ceftiofur (LC-MS + Microtox bioassay).</p>
+  </div>
+
+  <div class="comparar" id="comparar" hidden>
+    <label class="interruptor"><input type="checkbox" id="sin-ag"><span></span>Compare: remove Ag</label>
+    <p class="comparar-nota" id="comparar-nota"></p>
+  </div>
+
+  <nav class="controles" aria-label="Steps">
+    <button id="ant" class="btn" aria-label="Previous step">‹</button>
+    <button id="play" class="btn btn-play" aria-label="Pause">❚❚</button>
+    <button id="sig" class="btn" aria-label="Next step">›</button>
+    <div class="puntos" id="puntos"></div>
+    <button id="vista" class="btn btn-txt" hidden>Reset view</button>
+  </nav>
+  <button class="notas-btn" id="notas-btn" aria-expanded="false" aria-controls="notas">Scientific notes</button>
+</main>
+
+<section class="notas" id="notas" hidden>
+  <button class="notas-cerrar" id="notas-cerrar" aria-label="Close">×</button>
+  <h2>Scientific notes</h2>
+  <p><b>Source.</b> Photocatalytic oxidation of ceftiofur sodium under UV–visible irradiation using plasmonic porous Ag-TiO₂ nanospheres. <i>J. Ind. Eng. Chem.</i> 105 (2022) 384–392. doi:10.1016/j.jiec.2021.09.038</p>
+  <p><b>From the paper:</b> ~250 nm porous anatase nanospheres of ~10 nm particles (green route); 3–4 nm plasmonic Ag; photoluminescence shows Ag suppresses e⁻/h⁺ recombination; 92% vs 71% ceftiofur oxidation in 90 min; non-toxic products (LC-MS, Microtox).</p>
+  <p><b>Schematic choices (for author validation):</b></p>
+  <ul>
+    <li>Molecules are drawn <b>×6 larger</b> than real size. Ceftiofur structure: PubChem CID 6328657 (3D conformer, neutral form).</li>
+    <li>E<sub>g</sub> ≈ 3.2 eV is a typical anatase value, not taken from this paper.</li>
+    <li>•OH is shown as the main oxidant; O₂•⁻ formation at Ag is shown as a secondary path. Confirm with the paper's scavenger experiments.</li>
+    <li>Electron transfer is shown as TiO₂ → Ag (electron trap). Plasmonic hot-electron injection under visible light is not shown.</li>
+    <li>Molecule fragmentation is illustrative; it does not represent the specific LC-MS products.</li>
+    <li>Pore structure and Ag distribution are artistic approximations.</li>
+  </ul>
+  <p class="notas-pie">Draft v0.1 · Ascensus Science Visuals · for scientific review</p>
+</section>
+
+<div class="escala" id="escala" aria-hidden="true"><div class="escala-barra" id="escala-barra"></div><span id="escala-txt">50 nm</span></div>
+
+<section class="portada" id="portada" aria-labelledby="portada-t">
+  <div class="portada-caja">
+    <p class="portada-kicker">Interactive Paper</p>
+    <h1 id="portada-t">Photocatalytic oxidation of ceftiofur sodium under UV–visible irradiation using plasmonic porous Ag-TiO₂ nanospheres</h1>
+    <p class="portada-ref"><i>Journal of Industrial and Engineering Chemistry</i> 105 (2022) 384–392 · <a href="https://doi.org/10.1016/j.jiec.2021.09.038" target="_blank" rel="noopener">doi:10.1016/j.jiec.2021.09.038</a></p>
+    <p class="portada-bajada">How porous silver–titania nanospheres use light to destroy an antibiotic in water, step by step.</p>
+    <button class="portada-btn" id="portada-entrar">Explore the mechanism <span aria-hidden="true">→</span></button>
+    <p class="portada-pie">8 steps · about 1 minute · drag to rotate, use ← → to navigate</p>
+  </div>
+  <p class="portada-credito">Visual: Ascensus Science Visuals · Draft for author review</p>
+</section>
+
+<div class="cargando" id="cargando"><div class="spinner"></div><p>Building nanospheres…</p></div>
+<div class="sin-webgl" id="sin-webgl" hidden>
+  <h2>3D not available on this device</h2>
+  <p>This explainer needs WebGL 2. Try a recent version of Chrome, Safari, Edge or Firefox.</p>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "../../biblioteca/vendor/three/three.module.min.js",
+  "three/addons/": "../../biblioteca/vendor/three/addons/"
+} }
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

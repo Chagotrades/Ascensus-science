@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Visor de cuadros</title>
+<style>body{margin:0;background:#111;color:#ccc;font:13px system-ui}#g{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px}figure{margin:0}canvas{width:100%;display:block}figcaption{padding:2px 4px}</style></head>
+<body><div id="info"></div><div id="g"></div>
+<script>
+// Control de calidad: muestra cuadros de un video en una grilla.
+//   /herramientas/visor-video.html?v=/entregas/ag-tio2/video-mecanismo.mp4&n=9
+const q = new URLSearchParams(location.search);
+const v = document.createElement('video'); v.src = q.get('v'); v.muted = true; v.preload = 'auto';
+const n = +(q.get('n') || 9);
+v.addEventListener('loadedmetadata', async () => {
+  document.querySelector('#info').textContent = `${v.videoWidth}×${v.videoHeight} · ${v.duration.toFixed(2)} s`;
+  const tiempos = q.get('t') ? q.get('t').split(',').map(Number) : Array.from({ length: n }, (_, i) => (i + 0.5) * v.duration / n);
+  for (const t of tiempos) {
+    await new Promise((ok) => { v.onseeked = ok; v.currentTime = t; });
+    const c = document.createElement('canvas'); c.width = 640; c.height = Math.round(640 * v.videoHeight / v.videoWidth);
+    c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+    const f = document.createElement('figure'); f.append(c); const cap = document.createElement('figcaption'); cap.textContent = t.toFixed(1) + ' s'; f.append(cap);
+    document.querySelector('#g').append(f);
+  }
+  window.LISTO = true;
+});
+</script></body></html>
