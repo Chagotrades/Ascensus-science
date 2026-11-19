@@ -5,7 +5,7 @@
 ## Ahora mismo
 
 - **Fase actual:** Fase 1 — Piloto (0–2 meses)
-- **Foco de esta semana:** validar precios de la propuesta con Mathias, definir hosting y reunirse con el profesor con el kit completo (un link + propuesta)
+- **Foco de esta semana:** fotos del grupo el lunes 23 a las 16:00, revisar precios con Mathias, averiguar cómo formalizarnos (factura) y preparar los pedidos de la reunión (video de postulación sobre arsénico, roadmap, visualizaciones para la web del lab). Ver `HOJA-DE-RUTA.md`
 - **Clientes activos:** 1 (Prof. Pugazhenthiran Nalandhiran, USM)
 - **Ingresos acumulados:** $300.000 CLP (web del laboratorio)
 - **Bloqueos:** faltan los PDF de los papers (acceso cerrado; pedírselos al profesor o bajarlos con la cuenta USM) y confirmar el tema de su tesis. Falta definir hosting/dominio de Ascensus para mostrar la demo
@@ -24,7 +24,7 @@
 | Cliente | Proyecto | Estado | Monto (CLP) | Próximo paso |
 |---|---|---|---|---|
 | Prof. Pugazhenthiran (USM) | Web del laboratorio | Vendida, mantención gratis hasta 2027 | 300.000 | Entregar impecable |
-| Prof. Pugazhenthiran (USM) | Visualización de su investigación (proyecto aparte) | Kit gratis listo (interno): demo 3D, video, figura, graphical abstract, carrusel, página | Propuesta: 180k / 490k / 890k por paper, plan anual 2,2M (a validar) | Validar precios con Mathias → reunión: mostrar kit, que valide lo científico, preguntar próximo paper, FONDECYT y PDFs |
+| Prof. Pugazhenthiran (USM) | Visualización de su investigación (proyecto aparte) | Reunión 17-nov hecha: pagará por proyecto, ~5 graphical abstracts al año. Pedidos: video de postulación (arsénico), roadmap, visualizaciones para la web del lab. Kit gratis listo: demo 3D, video, figura, graphical abstract, carrusel, página | Propuesta: 180k / 490k / 890k por paper, plan anual 2,2M (a validar) | Validar precios con Mathias → reunión: mostrar kit, que valide lo científico, preguntar próximo paper, FONDECYT y PDFs |
 
 ## Herramienta interna y biblioteca 3D
 
@@ -39,6 +39,11 @@
 
 ## Bitácora (más reciente arriba)
 
+- **2026-11-19** — **Precios aprobados por Santiago y Mathias.** Se reemplaza el catálogo de PLAN.md §6 (el anterior queda tachado como historia). Por qué: la investigación de mercado mostró que los paquetes anteriores quedaban casi al nivel de Fiverr; los nuevos quedan 25–60% bajo los especialistas internacionales, con una hora de ~$25.000–35.000. Roadmap ajustado: simple $60.000 / ilustrado $110.000; pack postulación (video + roadmap) $520.000.
+- **2026-11-19** — Decisión: las visualizaciones 2D de las líneas de investigación para la web del lab van **sin costo**, porque son parte del compromiso de dejar la web bien y son la entrada con el profesor. En la cotización se muestran como "incluido" con su valor ($420.000). El precio sigue vigente para otros laboratorios.
+- **2026-11-19** — Investigación de precios de mercado con fuentes (`investigacion/precios-mercado-2026-11.md`). Propuesta de precios de lanzamiento (−30–40% sobre el precio normal), con todas las piezas bajo $500.000 para poder cobrar con boleta desde un FONDECYT: graphical abstract $150.000, plan anual de 5 por $650.000, línea de investigación 2D $95.000 (pack de 5 por $420.000), roadmap $110.000, video de postulación $480.000, portada $320.000, escena 3D $990.000. **Pendiente: validar con Mathias.**
+- **2026-11-19** — Decisión: la web del lab lleva visualizaciones **2D** de cada línea de investigación (sin 3D), pedidas por el profesor. Es la vitrina frente a los otros laboratorios de la USM. CLAUDE.md actualizado con la excepción. Se inicia una investigación de precios de mercado con datos para fijar tarifas.
+- **2026-11-17** — Reunión con el Prof. Pugazhenthiran (47 min, transcrita localmente). Va a pagar **por proyecto** con fondos de sus proyectos y quiere **~5 graphical abstracts al año**. Pedidos nuevos: video para postular un proyecto (detección de arsénico en agua potable, dispositivo IoT), imagen del roadmap de esa postulación y visualizaciones de las líneas de investigación **para la web del lab** (cambia la regla de no poner visualizaciones en la web de la USM: hay que confirmarlo). Fotos del grupo el lunes 23 a las 16:00. Recomendó formalizar una empresa para facturar y usar Instagram; ofrece coautoría si el trabajo es grande. No se habló de montos. Hoja de ruta en `HOJA-DE-RUTA.md`.
 - **2026-11-16** — Proyecto subido a GitHub, repo **privado**: https://github.com/Chagotrades/Ascensus-science. Fuera del repo (por `.gitignore`): PDFs del profesor, entregables generados (videos/PNG grandes) y las carpetas `sitio/` y `despliegue/`. Sitio armado para Netlify (subido por Santiago con Netlify Drop, visibilidad pública por link + noindex).
 - **2026-11-16** — Demo Ag-TiO₂ publicada como Artifact privado en claude.ai: https://claude.ai/artifact/D3uAYsonp8cq5xJZbAM1e1 (solo Santiago la ve hasta compartirla desde el menú Share). Paquete reproducible con `python herramientas/empaquetar_demo.py ag-tio2` → `despliegue/ag-tio2/`. La página del investigador NO se publicó así (los videos superan el límite de 15 MB por archivo): sigue pendiente un hosting propio de Ascensus.
 - **2026-11-16** — Segundo bug visto por Santiago: si la demo carga con el panel oculto (tamaño 0×0), la cámara quedaba inválida y el texto del panel invisible. Corregido y probado cargando en 0×0 y agrandando después.

@@ -16,7 +16,7 @@ Estudio de visualización científica interactiva para química, materiales y en
 
 ## Cliente actual
 
-Prof. Pugazhenthiran Nalandhiran (Química, USM). Fotocatálisis con TiO₂ modificado para degradar antibióticos y colorantes. Este proyecto es personal del profesor y NO va en la web del laboratorio de la USM.
+Prof. Pugazhenthiran Nalandhiran (Química, USM). Fotocatálisis con TiO₂ modificado para degradar antibióticos y colorantes. Las escenas 3D y la página del investigador son un proyecto personal del profesor y NO van en la web del laboratorio de la USM. **Excepción (decidida el 19-nov-2026, pedida por el profesor):** la web del lab sí lleva **visualizaciones 2D de cada línea de investigación** (sin 3D). Deben quedar impecables: los otros laboratorios de la USM las van a ver y son nuestra vitrina.
 
 ## Primera tarea
 

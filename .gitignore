@@ -20,3 +20,10 @@ __pycache__/
 Thumbs.db
 .netlify/
 node_modules/
+
+# Audios y transcripciones de reuniones con clientes: privados, no van al repo
+reuniones/*
+!reuniones/README.md
+
+# Entorno aislado para transcribir (herramientas/transcribir.py)
+.venv-whisper/

@@ -77,7 +77,29 @@ Alternativas: Ag-TiO₂ nanotubos 2013 (469 m²/g, 4 ciclos estable); TiO₂ nan
 6. **Bilingüe y cercano.**
 7. **Precio:** bajo los estudios internacionales, muy sobre Fiverr.
 
-## 6. Catálogo (precios a validar)
+## 6. Catálogo
+
+### Precios vigentes (aprobados por Santiago y Mathias el 19-nov-2026)
+
+Precios **brutos** con boleta de honorarios. El **lanzamiento** dura hasta jun-2027 o hasta los primeros 5 clientes, lo que ocurra primero. En cada cotización se muestran el precio normal y el de lanzamiento. Las piezas sueltas quedan bajo $500.000 para poder cobrarlas con boleta desde un FONDECYT; sobre ese monto se cobran en dos boletas por hitos. Respaldo y fuentes en `investigacion/precios-mercado-2026-11.md`.
+
+| Servicio | Precio normal | **Lanzamiento** |
+|---|---|---|
+| Graphical abstract (formato de revista, 2 rondas) | 220.000 | **150.000** |
+| Plan anual: 5 graphical abstracts | 1.000.000 | **650.000** |
+| Figura de mecanismo detallada (con y sin rótulos) | 280.000 | **180.000** |
+| Visualización 2D de una línea de investigación | 150.000 | **95.000** (pack de 5: **420.000**) |
+| Roadmap o infografía 2D simple | 90.000 | **60.000** |
+| Roadmap o infografía 2D ilustrado | 160.000 | **110.000** |
+| Video 60–90 s (subtítulos ES/EN, voz IA) | 750.000 | **480.000** (+40.000 con la voz del cliente) |
+| Pack postulación (video + roadmap) | 840.000 | **520.000** |
+| Portada de revista | 450.000 | **320.000** |
+| Escena 3D interactiva ("Interactive Paper", 1 año de hosting) | 1.600.000 | **990.000** |
+| Web de laboratorio | según alcance | referencia de mercado $350.000–550.000 |
+
+Caso especial: las líneas de investigación de la web del Prof. Pugazhenthiran van **sin costo**, como parte del compromiso con su web, pero se muestran como "incluido" con su valor.
+
+### ~~Catálogo inicial (precios a validar)~~ — reemplazado el 19-nov-2026 por la tabla de arriba
 
 | Servicio | Precio sugerido (CLP) |
 |---|---|
