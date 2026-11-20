@@ -1,0 +1,72 @@
+{
+  "_leeme": "Ficha de validación de cada componente de la biblioteca. Estados: borrador | en-revision | aprobado | grafico. Solo 'aprobado' (dentro de su 'alcance') o 'grafico' se usan en entregas a clientes. 'aprobacion' guarda la evidencia: quién, cuándo, por qué medio y qué dijo. Ver skills/graphical-abstract.md.",
+  "componentes": {
+    "3d/nanoesfera-porosa": {
+      "nombre": "Nanoesfera porosa de TiO₂ (anatasa) hecha de nanopartículas",
+      "archivo": "biblioteca/js/nanoesfera-porosa.js",
+      "cientifico": true,
+      "estado": "en-revision",
+      "alcance": "Nanoesferas porosas de anatasa ~250 nm de partículas ~10 nm (paper 2022)",
+      "fuente": "J. Ind. Eng. Chem. 105 (2022) 384–392, doi:10.1016/j.jiec.2021.09.038 (resumen)",
+      "aprobacion": null,
+      "historial": [
+        "2026-11-15 creado para la demo Ag-TiO₂",
+        "2026-11-16 relleno de partículas y poros finos (antes era hueca con un cráter)",
+        "2026-11-17 mostrado al Prof. Pugazhenthiran en la reunión; sin aprobación explícita"
+      ]
+    },
+    "3d/nanoparticulas-plasmonicas": {
+      "nombre": "Nanopartículas de Ag/Au sobre la superficie",
+      "archivo": "biblioteca/js/nanoparticulas-plasmonicas.js",
+      "cientifico": true,
+      "estado": "en-revision",
+      "alcance": "Ag plasmónica de 3–4 nm sobre las nanoesferas de TiO₂ (paper 2022). La distribución en la superficie es aproximada",
+      "fuente": "J. Ind. Eng. Chem. 105 (2022) 384–392 (resumen)",
+      "aprobacion": null,
+      "historial": ["2026-11-15 creado", "2026-11-17 mostrado en la reunión; sin aprobación explícita"]
+    },
+    "3d/molecula-sdf": {
+      "nombre": "Molécula bola-y-varilla desde un SDF (ceftiofur)",
+      "archivo": "biblioteca/js/molecula.js + biblioteca/datos/ceftiofur.sdf",
+      "cientifico": true,
+      "estado": "en-revision",
+      "alcance": "Ceftiofur, confórmero 3D de PubChem CID 6328657 (forma neutra). La fragmentación al degradar es ilustrativa y NO representa los productos reales",
+      "fuente": "PubChem CID 6328657",
+      "aprobacion": null,
+      "historial": ["2026-11-15 creado"]
+    },
+    "3d/especies-y-fotones": {
+      "nombre": "Fotones, e⁻, h⁺, •OH, O₂•⁻ (efectos 3D)",
+      "archivo": "biblioteca/js/particulas-fx.js",
+      "cientifico": true,
+      "estado": "en-revision",
+      "alcance": "Mecanismo de la demo Ag-TiO₂. O₂•⁻ como camino secundario y el gap de 3,2 eV (valor de literatura) quedan pendientes de confirmar",
+      "fuente": "Resumen del paper 2022 + notas científicas de la demo",
+      "aprobacion": null,
+      "historial": ["2026-11-15 creado"]
+    },
+
+    "2d/particula-tio2": { "nombre": "Partícula de TiO₂", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/nanoesfera-porosa-ag": { "nombre": "Nanoesfera porosa de TiO₂ con Ag (corte 2D)", "cientifico": true, "estado": "borrador", "alcance": "Pensado para el paper 2022 (mismo alcance que 3d/nanoesfera-porosa)", "fuente": "J. Ind. Eng. Chem. 105 (2022) 384–392", "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/nanoparticula-ag": { "nombre": "Nanopartícula de Ag", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/nanoparticula-au": { "nombre": "Nanopartícula de Au", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/molecula-agua": { "nombre": "Molécula de agua", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/especie-electron": { "nombre": "Electrón (e⁻)", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/especie-hueco": { "nombre": "Hueco (h⁺)", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/especie-oh": { "nombre": "Radical hidroxilo (•OH)", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/especie-superoxido": { "nombre": "Superóxido (O₂•⁻)", "cientifico": true, "estado": "borrador", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/diagrama-bandas": { "nombre": "Diagrama de bandas (BC/BV, excitación)", "cientifico": true, "estado": "borrador", "alcance": "Esquema general; el valor de Eg lo pone el científico", "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/diagrama-bandas-trampa-ag": { "nombre": "Diagrama de bandas con trampa de electrones en Ag", "cientifico": true, "estado": "borrador", "alcance": "Mecanismo de trampa TiO₂ → Ag (sin inyección plasmónica)", "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/electrodos": { "nombre": "Par de electrodos sumergidos", "cientifico": true, "estado": "borrador", "alcance": "Genérico. Para el sensor de arsénico, los materiales y la geometría los define el profesor", "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/chip-sensor": { "nombre": "Chip sensor con señal inalámbrica", "cientifico": true, "estado": "borrador", "alcance": "Genérico IoT. Para el proyecto de arsénico, esperar el boceto del profesor", "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+
+    "2d/foton-uv-visible": { "nombre": "Fotón (onda, luz UV-visible)", "cientifico": false, "estado": "grafico", "alcance": "Convención visual de la luz", "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/sol": { "nombre": "Sol", "cientifico": false, "estado": "grafico", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/vaso": { "nombre": "Vaso de precipitado", "cientifico": false, "estado": "grafico", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/celular": { "nombre": "Celular", "cientifico": false, "estado": "grafico", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/capsula": { "nombre": "Cápsula (pictograma de fármaco)", "cientifico": false, "estado": "grafico", "alcance": "Pictograma, no estructura química", "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/flecha-proceso": { "nombre": "Flecha de proceso", "cientifico": false, "estado": "grafico", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/hito-roadmap": { "nombre": "Hito de roadmap", "cientifico": false, "estado": "grafico", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] },
+    "2d/etiqueta": { "nombre": "Rótulo", "cientifico": false, "estado": "grafico", "alcance": null, "fuente": null, "aprobacion": null, "historial": ["2026-11-19 creado"] }
+  }
+}

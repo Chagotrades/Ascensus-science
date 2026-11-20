@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Biblioteca Ascensus</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #f4f6fa; --card: #ffffff; --texto: #1a2333; --texto-2: #5a6578; --linea: #dfe4ec; --acento: #3da5ff;
+  --aprobado: #1f9d55; --revision: #c97a00; --borrador: #b23a48; --grafico: #5a6578; color-scheme: light; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--texto); font: 15px/1.55 Inter, system-ui, sans-serif; }
+.envoltura { max-width: 1180px; margin: 0 auto; padding: 32px max(16px, env(safe-area-inset-left, 0px)) 64px; }
+h1 { font-size: 30px; margin: 0 0 6px; letter-spacing: -.01em; }
+.bajada { color: var(--texto-2); margin: 0 0 20px; max-width: 62em; }
+.regla { background: #fff7e6; border: 1px solid #f3d9a4; border-radius: 12px; padding: 12px 16px; margin: 0 0 22px; font-size: 14px; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; font-size: 13px; }
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+.filtros button { border: 1px solid var(--linea); background: #fff; border-radius: 999px; padding: 6px 14px; font: 500 13px Inter, sans-serif; cursor: pointer; color: var(--texto); }
+.filtros button[aria-pressed="true"] { background: var(--texto); color: #fff; border-color: var(--texto); }
+.filtros button:focus-visible, .btn:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+h2 { font-size: 20px; margin: 30px 0 12px; display: flex; align-items: baseline; gap: 10px; }
+h2 small { font-size: 13px; color: var(--texto-2); font-weight: 500; }
+.grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.tarjeta { background: var(--card); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.vista { height: 170px; display: grid; place-items: center; padding: 12px; background: repeating-conic-gradient(#f7f8fb 0 25%, #ffffff 0 50%) 0 0 / 16px 16px; border-bottom: 1px solid var(--linea); position: relative; }
+.vista svg { max-width: 100%; max-height: 146px; width: auto; height: auto; }
+.vista canvas { width: 100%; height: 100%; display: block; }
+.vista.oscura { background: #050a14; padding: 0; }
+.vista { overflow: hidden; }
+.vista.sin-aprobar::after { content: "NO APROBADO"; position: absolute; top: 18px; right: -34px; width: 150px; text-align: center; transform: rotate(35deg); background: rgba(178,58,72,.9); color: #fff; font: 700 9px Inter, sans-serif; letter-spacing: .08em; padding: 3px 0; }
+.info { padding: 12px 14px 14px; display: grid; gap: 6px; font-size: 13px; }
+.info b { font-size: 14px; }
+.id { font: 500 11.5px "JetBrains Mono", monospace; color: var(--texto-2); word-break: break-all; }
+.sello { display: inline-flex; align-items: center; gap: 6px; font: 600 11.5px Inter, sans-serif; text-transform: uppercase; letter-spacing: .06em; border-radius: 6px; padding: 3px 8px; width: fit-content; }
+.sello::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.s-aprobado { color: var(--aprobado); background: #e6f6ed; } .s-en-revision { color: var(--revision); background: #fff3dc; }
+.s-borrador { color: var(--borrador); background: #fbe9eb; } .s-grafico { color: var(--grafico); background: #eef1f5; }
+.alcance { color: var(--texto-2); font-size: 12.5px; }
+.btn { appearance: none; border: 1px solid var(--linea); background: #fff; border-radius: 8px; padding: 6px 10px; font: 500 12.5px Inter, sans-serif; cursor: pointer; width: fit-content; }
+.btn:hover { border-color: var(--acento); }
+footer { margin-top: 40px; color: var(--texto-2); font-size: 13px; }
+code { font: 500 12.5px "JetBrains Mono", monospace; background: #eef1f5; padding: 1px 5px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <h1>Biblioteca Ascensus</h1>
+  <p class="bajada">Componentes 2D (SVG) y 3D (Three.js) reutilizables, con la misma paleta. Cada pieza tiene su ficha de validación en <code>biblioteca/registro.json</code>.</p>
+  <p class="regla"><b>Regla:</b> en entregas a clientes solo se usan piezas <b>aprobadas</b> (dentro de su alcance) o <b>gráficas</b>. Lo que está en borrador o en revisión sirve para bocetos marcados como tales.</p>
+  <div class="leyenda" id="leyenda"></div>
+  <div class="filtros" role="group" aria-label="Filtrar por estado" id="filtros"></div>
+
+  <h2>2D <small>SVG · se descargan para Inkscape, Illustrator o Figma</small></h2>
+  <div class="grilla" id="grilla-2d"></div>
+
+  <h2>3D <small>Three.js · en vivo</small></h2>
+  <div class="grilla" id="grilla-3d"></div>
+
+  <footer>Regenerar los SVG sueltos: <code>node herramientas/exportar_svg.mjs</code> · Guía: <code>skills/graphical-abstract.md</code></footer>
+</div>
+
+<script type="importmap">{ "imports": { "three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/" } }</script>
+<script type="module">
+import { COMPONENTES_2D } from './2d/componentes.js';
+const registro = (await (await fetch('./registro.json')).json()).componentes;
+const ESTADOS = { aprobado: 'Aprobado', 'en-revision': 'En revisión', borrador: 'Borrador', grafico: 'Gráfico (sin contenido científico)' };
+const sello = (e) => `<span class="sello s-${e}">${ESTADOS[e] ?? 'Sin ficha'}</span>`;
+const usable = (e) => e === 'aprobado' || e === 'grafico';
+
+// leyenda + filtros
+const cuenta = Object.values(registro).reduce((a, f) => ((a[f.estado] = (a[f.estado] || 0) + 1), a), {});
+document.querySelector('#leyenda').innerHTML = Object.keys(ESTADOS).map((e) => `${sello(e)} <span>${cuenta[e] || 0}</span>`).join(' ');
+let filtro = 'todos';
+const filtros = document.querySelector('#filtros');
+[['todos', 'Todos'], ['usable', 'Usables en entregas'], ['pendiente', 'Por aprobar']].forEach(([k, t]) => {
+  const b = document.createElement('button'); b.textContent = t; b.setAttribute('aria-pressed', String(k === filtro));
+  b.onclick = () => { filtro = k; [...filtros.children].forEach((x) => x.setAttribute('aria-pressed', String(x === b))); aplicarFiltro(); };
+  filtros.appendChild(b);
+});
+function aplicarFiltro() {
+  document.querySelectorAll('.tarjeta').forEach((t) => {
+    const e = t.dataset.estado;
+    t.hidden = filtro === 'usable' ? !usable(e) : filtro === 'pendiente' ? usable(e) : false;
+  });
+}
+function tarjeta({ id, vista, oscura = false }) {
+  const f = registro[id] ?? { nombre: id, estado: 'sin-ficha' };
+  const el = document.createElement('article'); el.className = 'tarjeta'; el.dataset.estado = f.estado;
+  el.innerHTML = `<div class="vista ${oscura ? 'oscura' : ''} ${usable(f.estado) ? '' : 'sin-aprobar'}"></div>
+<div class="info"><b>${f.nombre}</b><span class="id">${id}</span>${sello(f.estado)}${f.alcance ? `<span class="alcance">${f.alcance}</span>` : ''}${f.aprobacion ? `<span class="alcance">✓ ${f.aprobacion.por} · ${f.aprobacion.fecha}</span>` : ''}</div>`;
+  if (typeof vista === 'string') el.querySelector('.vista').innerHTML = vista;
+  return el;
+}
+
+// 2D
+const g2 = document.querySelector('#grilla-2d');
+for (const { id, fn } of COMPONENTES_2D) {
+  const svg = fn(), t = tarjeta({ id, vista: svg });
+  const b = document.createElement('button'); b.className = 'btn'; b.textContent = 'Descargar SVG';
+  b.onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); a.download = id.split('/')[1] + (usable(registro[id]?.estado) ? '' : '.BORRADOR') + '.svg'; a.click(); };
+  t.querySelector('.info').appendChild(b); g2.appendChild(t);
+}
+
+// 3D: vistas en vivo pequeñas
+const THREE = await import('three');
+const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+const { crearNanoesferaPorosa } = await import('./js/nanoesfera-porosa.js');
+const { crearNanoparticulasPlasmonicas } = await import('./js/nanoparticulas-plasmonicas.js');
+const { parsearSDF, crearMolecula } = await import('./js/molecula.js');
+const { crearPoolSprites, crearFotones } = await import('./js/particulas-fx.js');
+const g3 = document.querySelector('#grilla-3d');
+const vistas3d = [];
+function vista3d(id, armar) {
+  const t = tarjeta({ id, oscura: true }); g3.appendChild(t);
+  const cont = t.querySelector('.vista');
+  try {
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+    cont.appendChild(renderer.domElement);
+    const escena = new THREE.Scene(), pm = new THREE.PMREMGenerator(renderer);
+    escena.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; escena.environmentIntensity = 0.4;
+    escena.add(new THREE.HemisphereLight('#a9c4f0', '#0b1426', 0.35));
+    const luz = new THREE.DirectionalLight('#fff6e8', 1.6); luz.position.set(3, 4, 5); escena.add(luz);
+    const camara = new THREE.PerspectiveCamera(38, 1, 0.1, 5000);
+    const { objeto, dist, girar = true } = armar(escena);
+    camara.position.set(0, dist * 0.25, dist); camara.lookAt(0, 0, 0);
+    vistas3d.push({ renderer, escena, camara, objeto, cont, girar });
+  } catch (e) { cont.textContent = 'WebGL no disponible'; }
+}
+vista3d('3d/nanoesfera-porosa', (escena) => {
+  const esfera = crearNanoesferaPorosa({ diametro: 250, diametroParticula: 10, segmentos: 8, grosorCapa: 40, color: '#a9b7cc' });
+  const ag = crearNanoparticulasPlasmonicas({ superficie: esfera.superficie, cantidad: 120 });
+  const g = new THREE.Group(); g.add(esfera.grupo, ag.grupo); escena.add(g); return { objeto: g, dist: 420 };
+});
+vista3d('3d/nanoparticulas-plasmonicas', (escena) => {
+  const esfera = crearNanoesferaPorosa({ diametro: 60, diametroParticula: 10, segmentos: 12, grosorCapa: null, color: '#a9b7cc', semilla: 5 });
+  const ag = crearNanoparticulasPlasmonicas({ superficie: esfera.superficie, cantidad: 10, brilloBase: 0.35 });
+  const g = new THREE.Group(); g.add(esfera.grupo, ag.grupo); escena.add(g); return { objeto: g, dist: 110 };
+});
+const sdf = parsearSDF(await (await fetch('./datos/ceftiofur.sdf')).text());
+vista3d('3d/molecula-sdf', (escena) => {
+  const mol = crearMolecula(sdf, { escala: 10 }); escena.add(mol.grupo); return { objeto: mol.grupo, dist: mol.radio * 3.4 };
+});
+vista3d('3d/especies-y-fotones', (escena) => {
+  const g = new THREE.Group();
+  [['e⁻', '#3da5ff', -1.6], ['h⁺', '#ff9f1c', -0.55], ['•OH', '#ff4d6d', 0.55], ['O₂•⁻', '#22c3a6', 1.6]].forEach(([s, c, x]) => {
+    const p = crearPoolSprites({ simbolo: s, color: c, cantidad: 1, tam: 0.95 }); p.fijar(0, new THREE.Vector3(x, -0.45, 0), 1); g.add(p.grupo);
+  });
+  const f = crearFotones({ cantidad: 1, tam: 0.12, amplitud: 0.12, puntos: 60 });
+  f.fijar(0, new THREE.Vector3(-2.2, 0.7, 0), new THREE.Vector3(2.2, 0.7, 0), 0.95, 1); f.actualizar(); g.add(f.objeto);
+  escena.add(g); return { objeto: g, dist: 4.6, girar: false };
+});
+// dibujar solo lo visible
+const visibles = new Set();
+const io = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target))));
+vistas3d.forEach((v) => io.observe(v.cont));
+const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function cuadro(t) {
+  for (const v of vistas3d) {
+    if (!visibles.has(v.cont)) continue;
+    const w = v.cont.clientWidth, h = v.cont.clientHeight;
+    if (v.renderer.domElement.width !== Math.round(w * v.renderer.getPixelRatio())) { v.renderer.setSize(w, h, false); v.camara.aspect = w / h; v.camara.updateProjectionMatrix(); }
+    if (v.girar && !reducido) v.objeto.rotation.y = t * 0.0003;
+    v.renderer.render(v.escena, v.camara);
+  }
+  requestAnimationFrame(cuadro);
+}
+requestAnimationFrame(cuadro);
+aplicarFiltro();
+</script>
+</body>
+</html>

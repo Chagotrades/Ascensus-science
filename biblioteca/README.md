@@ -1,4 +1,20 @@
-# Biblioteca 3D de Ascensus
+# Biblioteca de Ascensus (2D + 3D)
+
+**Catálogo visual:** `biblioteca/catalogo.html` (con el servidor: http://localhost:8123/biblioteca/catalogo.html). Muestra cada pieza 2D y 3D con su sello de validación.
+
+## Aprobación científica (obligatoria)
+
+Cada componente tiene una ficha en **`registro.json`**: estado (`borrador` → `en-revision` → `aprobado`, o `grafico` si no tiene contenido científico), **alcance** de la aprobación, fuente y evidencia (quién aprobó, cuándo, por qué medio). **En entregas a clientes solo se usan piezas `aprobado` (dentro de su alcance) o `grafico`.** Detalle en `skills/graphical-abstract.md`.
+
+## Paleta común
+
+`estilo/colores.js` es la única fuente de colores para 2D y 3D (TiO₂, Ag, Au, e⁻, h⁺, •OH, O₂•⁻, luz, átomos CPK). Las especies llevan siempre su símbolo escrito (daltonismo).
+
+## 2D (SVG)
+
+`2d/componentes.js`: funciones con parámetros que devuelven SVG (partícula y nanoesfera de TiO₂, Ag/Au, H₂O, e⁻, h⁺, •OH, O₂•⁻, diagrama de bandas, fotón, sol, vaso, electrodos, chip sensor, celular, cápsula, flecha, hito de roadmap, rótulo). Para Inkscape, Illustrator o Figma: `node herramientas/exportar_svg.mjs` → `2d/svg/` (lo no aprobado sale con `.BORRADOR` en el nombre).
+
+## 3D (Three.js)
 
 Componentes Three.js reutilizables para química y materiales. **1 unidad = 1 nm.** Todo entra por parámetros; ningún valor de un cliente queda escrito adentro.
 

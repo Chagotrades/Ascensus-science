@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/particula-tio2 · estado: borrador -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-label="TiO₂ particle"><title>TiO₂ particle</title><defs><radialGradient id="par-1" cx="35%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#dfe7f2"/><stop offset="1" stop-color="#8a97ab"/></radialGradient></defs>
+<circle cx="40" cy="40" r="39" fill="url(#par-1)" stroke="#8a97ab" stroke-width="0.96"/></svg>

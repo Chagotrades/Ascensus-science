@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/nanoparticula-au · estado: borrador -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60" role="img" aria-label="Au nanoparticle"><title>Au nanoparticle</title><defs><radialGradient id="met-6" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff4d1"/><stop offset="0.45" stop-color="#ffcf6b"/><stop offset="1" stop-color="#a87a1f"/></radialGradient>
+<radialGradient id="halo-7"><stop offset="0.45" stop-color="#ffd27a" stop-opacity="0.7"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient></defs>
+<circle cx="30" cy="30" r="30" fill="url(#halo-7)"/><circle cx="30" cy="30" r="16.5" fill="url(#met-6)"/></svg>

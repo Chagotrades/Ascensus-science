@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/diagrama-bandas-trampa-ag · estado: borrador · alcance: Mecanismo de trampa TiO₂ → Ag (sin inyección plasmónica) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200" role="img" aria-label="band diagram"><title>band diagram</title><defs><marker id="fl-9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5a6578"/></marker></defs>
+<rect x="24" y="24" width="165" height="26" rx="4" fill="#3da5ff" fill-opacity="0.22" stroke="#3da5ff"/>
+<text x="106.5" y="41" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="11" fill="#1a2333">CB</text>
+<rect x="24" y="150" width="165" height="26" rx="4" fill="#ff9f1c" fill-opacity="0.22" stroke="#ff9f1c"/>
+<text x="106.5" y="167" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="11" fill="#1a2333">VB</text>
+<line x1="73.5" y1="148" x2="73.5" y2="54" stroke="#5a6578" stroke-width="1.6" marker-end="url(#fl-9)"/>
+<circle cx="73.5" cy="37" r="9" fill="#3da5ff"/><text x="73.5" y="40.5" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-weight="700" font-size="9" fill="#fff">e⁻</text>
+<circle cx="73.5" cy="163" r="9" fill="#ff9f1c"/><text x="73.5" y="166.5" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-weight="700" font-size="9" fill="#fff">h⁺</text>
+<text x="93.3" y="104" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="12" fill="#5a6578">E<tspan baseline-shift="sub" font-size="9">g</tspan></text><rect x="219" y="40" width="66" height="60" rx="4" fill="#c7ced9"/><text x="252" y="60" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="11" fill="#1a2333">Ag</text>
+<line x1="223" y1="80" x2="281" y2="80" stroke="#1a2333" stroke-dasharray="3 2"/>
+<path d="M 189 37 C 207 37 209 60 219 76" fill="none" stroke="#3da5ff" stroke-width="1.6" marker-end="url(#fl-9)"/></svg>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/diagrama-bandas · estado: borrador · alcance: Esquema general; el valor de Eg lo pone el científico -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 200" width="220" height="200" role="img" aria-label="band diagram"><title>band diagram</title><defs><marker id="fl-8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5a6578"/></marker></defs>
+<rect x="17.6" y="24" width="184.79999999999998" height="26" rx="4" fill="#3da5ff" fill-opacity="0.22" stroke="#3da5ff"/>
+<text x="110" y="41" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="11" fill="#1a2333">CB</text>
+<rect x="17.6" y="150" width="184.79999999999998" height="26" rx="4" fill="#ff9f1c" fill-opacity="0.22" stroke="#ff9f1c"/>
+<text x="110" y="167" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="11" fill="#1a2333">VB</text>
+<line x1="73.03999999999999" y1="148" x2="73.03999999999999" y2="54" stroke="#5a6578" stroke-width="1.6" marker-end="url(#fl-8)"/>
+<circle cx="73.03999999999999" cy="37" r="9" fill="#3da5ff"/><text x="73.03999999999999" y="40.5" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-weight="700" font-size="9" fill="#fff">e⁻</text>
+<circle cx="73.03999999999999" cy="163" r="9" fill="#ff9f1c"/><text x="73.03999999999999" y="166.5" text-anchor="middle" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-weight="700" font-size="9" fill="#fff">h⁺</text>
+<text x="95.21599999999998" y="104" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" font-size="12" fill="#5a6578">E<tspan baseline-shift="sub" font-size="9">g</tspan></text></svg>

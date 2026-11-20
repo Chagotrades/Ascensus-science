@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/nanoparticula-ag · estado: borrador -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60" role="img" aria-label="Ag nanoparticle"><title>Ag nanoparticle</title><defs><radialGradient id="met-4" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.45" stop-color="#c7ced9"/><stop offset="1" stop-color="#6d7685"/></radialGradient>
+<radialGradient id="halo-5"><stop offset="0.45" stop-color="#cfe3ff" stop-opacity="0.7"/><stop offset="1" stop-color="#cfe3ff" stop-opacity="0"/></radialGradient></defs>
+<circle cx="30" cy="30" r="30" fill="url(#halo-5)"/><circle cx="30" cy="30" r="16.5" fill="url(#met-4)"/></svg>

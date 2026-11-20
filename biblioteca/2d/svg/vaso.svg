@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/vaso · estado: grafico -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" width="120" height="140" role="img" aria-label="beaker"><title>beaker</title><path d="M 18 59.92 L 18 125 Q 18 133 26 133 L 94 133 Q 102 133 102 125 L 102 59.92 Z" fill="#cfeeff" opacity="0.85"/>
+<path d="M 12 11.200000000000001 L 18 17.200000000000003 L 18 125 Q 18 133 26 133 L 94 133 Q 102 133 102 125 L 102 11.200000000000001" fill="none" stroke="#5a6578" stroke-width="3" stroke-linejoin="round"/>
+<line x1="88" y1="90.37" x2="102" y2="90.37" stroke="#5a6578" stroke-width="1.5"/><line x1="88" y1="72.1" x2="102" y2="72.1" stroke="#5a6578" stroke-width="1.5"/><line x1="88" y1="53.83" x2="102" y2="53.83" stroke="#5a6578" stroke-width="1.5"/></svg>

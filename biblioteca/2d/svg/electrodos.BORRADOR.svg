@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/electrodos · estado: borrador · alcance: Genérico. Para el sensor de arsénico, los materiales y la geometría los define el profesor -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 170" width="140" height="170" role="img" aria-label="electrodes"><title>electrodes</title><path d="M 21 80.15499999999999 L 21 153.5 Q 21 161.5 29 161.5 L 111 161.5 Q 119 161.5 119 153.5 L 119 80.15499999999999 Z" fill="#cfeeff" opacity="0.85"/>
+<path d="M 15 13.6 L 21 19.6 L 21 153.5 Q 21 161.5 29 161.5 L 111 161.5 Q 119 161.5 119 153.5 L 119 13.6" fill="none" stroke="#5a6578" stroke-width="3" stroke-linejoin="round"/>
+<line x1="105" y1="109.74" x2="119" y2="109.74" stroke="#5a6578" stroke-width="1.5"/><line x1="105" y1="87.55" x2="119" y2="87.55" stroke="#5a6578" stroke-width="1.5"/><line x1="105" y1="65.36" x2="119" y2="65.36" stroke="#5a6578" stroke-width="1.5"/><rect x="50.4" y="3.4" width="9.8" height="127.5" rx="2" fill="#7b8794"/><rect x="84" y="3.4" width="9.8" height="127.5" rx="2" fill="#c9a227"/></svg>

@@ -1,0 +1,671 @@
+<title>Ascensus CRM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra de resumen arriba, pestañas (Pipeline · Proyectos · Agenda), panel lateral para la ficha del contacto. */
+:root {
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+  --surface-2: #eaeef5;
+  --fg: #141c2b;
+  --muted: #5a6578;
+  --line: #d5dce7;
+  --accent: #1f7fe0;
+  --accent-soft: #e2eefc;
+  --ok: #1d8a5a;
+  --ok-soft: #e0f3ea;
+  --warn: #b56a00;
+  --warn-soft: #fbefdc;
+  --bad: #c8304d;
+  --bad-soft: #fbe3e8;
+  --shadow: 0 10px 30px rgba(10, 20, 40, .14);
+  --f-display: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+  --f-body: Inter, "Segoe UI", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #050a14; --surface: #0d1524; --surface-2: #141e31; --fg: #e8eef8; --muted: #93a0b5; --line: #24304a;
+    --accent: #3da5ff; --accent-soft: #10284a; --ok: #43c08a; --ok-soft: #0f2c21; --warn: #ffb347; --warn-soft: #33240c;
+    --bad: #ff6b85; --bad-soft: #3a1520; --shadow: 0 10px 30px rgba(0, 0, 0, .5); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #050a14; --surface: #0d1524; --surface-2: #141e31; --fg: #e8eef8; --muted: #93a0b5; --line: #24304a;
+  --accent: #3da5ff; --accent-soft: #10284a; --ok: #43c08a; --ok-soft: #0f2c21; --warn: #ffb347; --warn-soft: #33240c;
+  --bad: #ff6b85; --bad-soft: #3a1520; --shadow: 0 10px 30px rgba(0, 0, 0, .5); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 14px/1.5 var(--f-body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 20px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; margin: 0; text-wrap: balance; }
+h1 { font-size: 22px; letter-spacing: -.01em; }
+h2 { font-size: 17px; }
+h3 { font-size: 14px; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+button, select, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+header.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--fg); position: relative; flex: none; }
+.brand .mark::before, .brand .mark::after { content: ""; position: absolute; border-radius: 50%; }
+.brand .mark::before { inset: 7px; background: var(--bg); }
+.brand .mark::after { width: 7px; height: 7px; background: var(--accent); right: 4px; top: 4px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 7px 12px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.danger { color: var(--bad); }
+.btn.danger.armed { background: var(--bad); border-color: var(--bad); color: #fff; }
+.btn.small { padding: 3px 8px; font-size: 12px; }
+.btn:disabled { opacity: .5; cursor: default; }
+
+.status { font-size: 13px; padding: 10px 14px; border-radius: 8px; background: var(--warn-soft); color: var(--warn); }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.kpi { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; }
+.kpi .val { font-family: var(--f-mono); font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.kpi .sub { font-size: 12px; color: var(--muted); }
+.kpi.alert .val { color: var(--bad); }
+@media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+nav.tabs a { padding: 8px 14px; text-decoration: none; color: var(--muted); font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+nav.tabs a[aria-current="page"] { color: var(--fg); border-bottom-color: var(--accent); }
+nav.tabs .count { font-family: var(--f-mono); font-size: 11px; background: var(--surface-2); border-radius: 10px; padding: 1px 6px; margin-left: 4px; }
+
+/* Pipeline */
+.board-scroll { overflow-x: auto; padding-bottom: 6px; }
+.board { display: grid; grid-template-columns: repeat(6, minmax(210px, 1fr)); gap: 12px; min-width: 1320px; }
+@media (min-width: 1240px) { .board { min-width: 0; } }
+.col { background: var(--surface-2); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 160px; min-width: 0; }
+.col-head { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 4px 4px; }
+.col-head .eyebrow { color: var(--fg); }
+.col-empty { font-size: 12px; color: var(--muted); padding: 8px 4px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 6px; text-align: left; width: 100%; }
+.card:hover { border-color: var(--accent); }
+.card .name { font-weight: 600; }
+.card .inst { font-size: 12px; color: var(--muted); }
+.card .next { font-size: 12px; display: flex; gap: 6px; align-items: flex-start; }
+.card .foot { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.card .moves { display: flex; gap: 2px; }
+.card .moves button { border: 1px solid var(--line); background: transparent; border-radius: 6px; width: 24px; height: 22px; line-height: 1; color: var(--muted); }
+.card .moves button:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+.card .moves button:disabled { opacity: .3; cursor: default; }
+.chip { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 6px; padding: 1px 6px; white-space: nowrap; font-family: var(--f-mono); }
+.chip.late { background: var(--bad-soft); color: var(--bad); }
+.chip.soon { background: var(--warn-soft); color: var(--warn); }
+.chip.later { background: var(--surface-2); color: var(--muted); }
+
+/* Proyectos */
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 820px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; background: var(--surface-2); }
+td.r, th.r { text-align: right; }
+tbody tr:hover { background: var(--surface-2); }
+tfoot td { font-weight: 600; border-bottom: 0; }
+.linkish { background: none; border: 0; padding: 0; color: var(--fg); font-weight: 600; text-align: left; }
+.linkish:hover { color: var(--accent); }
+.pill { display: inline-block; font-size: 12px; font-weight: 500; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.st-cotizacion, .st-enviada { background: var(--accent-soft); color: var(--accent); }
+.st-aprobado, .st-produccion, .st-entregado { background: var(--warn-soft); color: var(--warn); }
+.st-pagado { background: var(--ok-soft); color: var(--ok); }
+.st-perdido { background: var(--surface-2); color: var(--muted); }
+.incl { font-size: 11px; color: var(--muted); display: block; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* Agenda */
+.agenda { display: grid; gap: 18px; max-width: 760px; }
+.agenda section { display: grid; gap: 8px; }
+.row { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; text-align: left; width: 100%; }
+.row:hover { border-color: var(--accent); }
+.row .who { font-size: 12px; color: var(--muted); }
+@media (max-width: 480px) { .row { grid-template-columns: 1fr; gap: 4px; } }
+
+/* Panel lateral */
+.scrim { position: fixed; inset: 0; background: rgba(5, 10, 20, .45); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100%); background: var(--bg); z-index: 21; box-shadow: var(--shadow); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.drawer-body { overflow-y: auto; padding: 18px; display: grid; gap: 22px; align-content: start; }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+.form .full { grid-column: 1 / -1; }
+@media (max-width: 480px) { .form { grid-template-columns: 1fr; } }
+label.f { display: grid; gap: 4px; font-size: 12px; color: var(--muted); font-weight: 500; min-width: 0; }
+label.f input, label.f select, label.f textarea { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; color: var(--fg); font-size: 14px; width: 100%; min-width: 0; }
+label.f textarea { min-height: 70px; resize: vertical; }
+label.check { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+.form-actions { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; grid-column: 1 / -1; }
+.hint { font-size: 12px; color: var(--muted); }
+.saved { font-size: 12px; color: var(--ok); }
+.err { font-size: 12px; color: var(--bad); }
+.sub-list { display: grid; gap: 6px; }
+.sub-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 8px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; width: 100%; text-align: left; }
+.sub-item:hover { border-color: var(--accent); }
+.timeline { display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 6px; }
+.ev { position: relative; padding: 0 0 14px 16px; display: grid; gap: 2px; }
+.ev::before { content: ""; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+.ev .meta { font-size: 12px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ev .txt { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ev .del { margin-left: auto; }
+.quick { display: grid; grid-template-columns: 130px 140px 1fr; gap: 8px; align-items: end; }
+@media (max-width: 480px) { .quick { grid-template-columns: 1fr 1fr; } .quick .grow { grid-column: 1 / -1; } }
+.empty { padding: 28px 16px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 12px; }
+@media (prefers-reduced-motion: no-preference) { .drawer { animation: slide .18s ease-out; } @keyframes slide { from { transform: translateX(24px); opacity: .6; } } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><div><h1>Ascensus CRM</h1><div class="eyebrow">Science Visuals · v0</div></div></div>
+    <div class="actions">
+      <button class="btn" id="btn-new-project" type="button">+ Proyecto</button>
+      <button class="btn primary" id="btn-new-contact" type="button">+ Contacto</button>
+    </div>
+  </header>
+
+  <div class="status" id="status">Conectando con la base de datos…</div>
+
+  <section class="kpis" aria-label="Resumen">
+    <div class="kpi"><span class="eyebrow">Cobrado</span><span class="val" id="k-cobrado">—</span><span class="sub" id="k-cobrado-sub">&nbsp;</span></div>
+    <div class="kpi"><span class="eyebrow">Por cobrar</span><span class="val" id="k-porcobrar">—</span><span class="sub" id="k-porcobrar-sub">&nbsp;</span></div>
+    <div class="kpi"><span class="eyebrow">En propuesta</span><span class="val" id="k-propuesta">—</span><span class="sub" id="k-propuesta-sub">&nbsp;</span></div>
+    <div class="kpi" id="k-tareas-box"><span class="eyebrow">Próximos pasos vencidos</span><span class="val" id="k-tareas">—</span><span class="sub" id="k-tareas-sub">&nbsp;</span></div>
+  </section>
+
+  <nav class="tabs" aria-label="Vistas">
+    <a href="#pipeline" data-view="pipeline">Pipeline<span class="count" id="c-pipeline">0</span></a>
+    <a href="#proyectos" data-view="proyectos">Proyectos<span class="count" id="c-proyectos">0</span></a>
+    <a href="#agenda" data-view="agenda">Agenda<span class="count" id="c-agenda">0</span></a>
+  </nav>
+
+  <main id="view-pipeline" class="board-scroll"><div class="board" id="board"></div></main>
+
+  <main id="view-proyectos" hidden>
+    <div class="filters" style="margin-bottom:12px">
+      <label class="f" style="flex-direction:row"><span class="eyebrow">Estado</span>
+        <select id="filter-estado"><option value="">Todos</option></select>
+      </label>
+    </div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Proyecto</th><th>Cliente</th><th>Servicio</th><th class="r">Monto (CLP)</th><th>Estado</th><th>Entrega</th><th>Fondo</th></tr></thead>
+      <tbody id="proj-body"></tbody>
+      <tfoot><tr><td colspan="3">Total visible</td><td class="r num" id="proj-total">—</td><td colspan="3"></td></tr></tfoot>
+    </table></div>
+  </main>
+
+  <main id="view-agenda" class="agenda" hidden></main>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="drawer-title">
+  <div class="drawer-head"><h2 id="drawer-title">Contacto</h2><button class="btn small" type="button" id="drawer-close">Cerrar</button></div>
+  <div class="drawer-body" id="drawer-body"></div>
+</aside>
+
+<script>
+(() => {
+  // ---------- Configuración del negocio ----------
+  const ETAPAS = [
+    { id: 'prospecto', label: 'Prospecto' },
+    { id: 'contactado', label: 'Contactado' },
+    { id: 'reunion', label: 'Reunión' },
+    { id: 'propuesta', label: 'Propuesta enviada' },
+    { id: 'cliente', label: 'Cliente' },
+    { id: 'pausa', label: 'En pausa / perdido' },
+  ];
+  const ESTADOS = [
+    { id: 'cotizacion', label: 'Por cotizar', grupo: 'propuesta' },
+    { id: 'enviada', label: 'Cotización enviada', grupo: 'propuesta' },
+    { id: 'aprobado', label: 'Aprobado', grupo: 'porcobrar' },
+    { id: 'produccion', label: 'En producción', grupo: 'porcobrar' },
+    { id: 'entregado', label: 'Entregado, por cobrar', grupo: 'porcobrar' },
+    { id: 'pagado', label: 'Pagado', grupo: 'cobrado' },
+    { id: 'perdido', label: 'Perdido', grupo: 'perdido' },
+  ];
+  // PLAN.md §6 — precios aprobados el 19-nov-2026 (normal / lanzamiento, CLP brutos con boleta)
+  const CATALOGO = [
+    { id: 'ga', label: 'Graphical abstract', normal: 220000, lanz: 150000 },
+    { id: 'ga5', label: 'Plan anual: 5 graphical abstracts', normal: 1000000, lanz: 650000 },
+    { id: 'mecanismo', label: 'Figura de mecanismo detallada', normal: 280000, lanz: 180000 },
+    { id: 'linea', label: 'Visualización 2D de una línea de investigación', normal: 150000, lanz: 95000 },
+    { id: 'linea5', label: 'Pack 5 líneas de investigación 2D', normal: 750000, lanz: 420000 },
+    { id: 'roadmap', label: 'Roadmap / infografía 2D simple', normal: 90000, lanz: 60000 },
+    { id: 'roadmap-ilus', label: 'Roadmap / infografía 2D ilustrado', normal: 160000, lanz: 110000 },
+    { id: 'video', label: 'Video 60–90 s', normal: 750000, lanz: 480000 },
+    { id: 'postulacion', label: 'Pack postulación (video + roadmap)', normal: 840000, lanz: 520000 },
+    { id: 'portada', label: 'Portada de revista', normal: 450000, lanz: 320000 },
+    { id: 'escena3d', label: 'Escena 3D interactiva (Interactive Paper)', normal: 1600000, lanz: 990000 },
+    { id: 'web', label: 'Web de laboratorio', normal: null, lanz: null },
+    { id: 'otro', label: 'Otro / a medida', normal: null, lanz: null },
+  ];
+  const TIPOS_ACT = ['Reunión', 'Correo', 'Llamada / WhatsApp', 'Entrega', 'Pago', 'Nota'];
+
+  // ---------- Utilidades ----------
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const clp = (n) => (n == null || n === '' || isNaN(n)) ? '—' : '$' + Math.round(Number(n)).toLocaleString('es-CL');
+  const hoy = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const parseDate = (s) => { if (!s) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const fmtDate = (s) => { const d = parseDate(s); return d ? d.toLocaleDateString('es-CL', { day: 'numeric', month: 'short', year: d.getFullYear() !== hoy().getFullYear() ? 'numeric' : undefined }) : ''; };
+  const diasHasta = (s) => { const d = parseDate(s); return d ? Math.round((d - hoy()) / 86400000) : null; };
+  const etapaLabel = (id) => ETAPAS.find((e) => e.id === id)?.label || id;
+  const estado = (id) => ESTADOS.find((e) => e.id === id) || { id, label: id, grupo: 'propuesta' };
+  const servicio = (id) => CATALOGO.find((s) => s.id === id);
+  function fechaChip(s) {
+    const n = diasHasta(s);
+    if (n == null) return '';
+    const cls = n < 0 ? 'late' : n <= 7 ? 'soon' : 'later';
+    const txt = n < 0 ? `vencido ${fmtDate(s)}` : n === 0 ? 'hoy' : n === 1 ? 'mañana' : fmtDate(s);
+    return `<span class="chip ${cls}">${esc(txt)}</span>`;
+  }
+
+  // ---------- Estado ----------
+  const S = { contactos: new Map(), proyectos: new Map(), actividades: new Map(), ready: { contactos: false, proyectos: false, actividades: false } };
+  let db = null, user = null, myId = null, canWrite = true;
+  const names = new Map();
+  let openDrawer = null; // { kind: 'contacto'|'proyecto', id }
+
+  const statusEl = $('#status');
+  function setStatus(msg) { statusEl.textContent = msg || ''; statusEl.hidden = !msg; }
+
+  // ---------- Vistas ----------
+  const VIEWS = ['pipeline', 'proyectos', 'agenda'];
+  function currentView() { const h = location.hash.slice(1); return VIEWS.includes(h) ? h : 'pipeline'; }
+  function showView() {
+    const v = currentView();
+    VIEWS.forEach((id) => { $('#view-' + id).hidden = id !== v; });
+    document.querySelectorAll('nav.tabs a').forEach((a) => { if (a.dataset.view === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  }
+  window.addEventListener('hashchange', showView);
+
+  const contactos = () => [...S.contactos.values()];
+  const proyectos = () => [...S.proyectos.values()];
+  const proyDe = (cid) => proyectos().filter((p) => p.contactoId === cid);
+  const actDe = (cid) => [...S.actividades.values()].filter((a) => a.contactoId === cid).sort((a, b) => (b.fecha || '').localeCompare(a.fecha || '') || (b.creado || '').localeCompare(a.creado || ''));
+
+  function renderKpis() {
+    const ps = proyectos();
+    const sum = (g) => ps.filter((p) => estado(p.estado).grupo === g).reduce((t, p) => t + (Number(p.monto) || 0), 0);
+    const cnt = (g) => ps.filter((p) => estado(p.estado).grupo === g).length;
+    $('#k-cobrado').textContent = clp(sum('cobrado'));
+    $('#k-cobrado-sub').textContent = `${cnt('cobrado')} proyecto${cnt('cobrado') === 1 ? '' : 's'} pagado${cnt('cobrado') === 1 ? '' : 's'}`;
+    $('#k-porcobrar').textContent = clp(sum('porcobrar'));
+    $('#k-porcobrar-sub').textContent = `${cnt('porcobrar')} aprobado${cnt('porcobrar') === 1 ? '' : 's'} o en curso`;
+    $('#k-propuesta').textContent = clp(sum('propuesta'));
+    $('#k-propuesta-sub').textContent = `${cnt('propuesta')} por cerrar`;
+    const activos = contactos().filter((c) => c.etapa !== 'pausa' && c.proximoPaso);
+    const vencidos = activos.filter((c) => (diasHasta(c.proximaFecha) ?? 1) < 0).length;
+    const semana = activos.filter((c) => { const n = diasHasta(c.proximaFecha); return n != null && n >= 0 && n <= 7; }).length;
+    $('#k-tareas').textContent = String(vencidos);
+    $('#k-tareas-sub').textContent = `${semana} esta semana`;
+    $('#k-tareas-box').classList.toggle('alert', vencidos > 0);
+    $('#c-pipeline').textContent = contactos().filter((c) => c.etapa !== 'pausa').length;
+    $('#c-proyectos').textContent = ps.filter((p) => !['pagado', 'perdido'].includes(p.estado)).length;
+    $('#c-agenda').textContent = activos.length;
+  }
+
+  function renderBoard() {
+    const byStage = Object.fromEntries(ETAPAS.map((e) => [e.id, []]));
+    contactos().forEach((c) => (byStage[c.etapa] || byStage.prospecto).push(c));
+    const board = $('#board');
+    board.innerHTML = ETAPAS.map((e, i) => {
+      const list = byStage[e.id].sort((a, b) => (a.proximaFecha || '9999').localeCompare(b.proximaFecha || '9999') || (a.nombre || '').localeCompare(b.nombre || ''));
+      const cards = list.map((c) => {
+        const abiertos = proyDe(c.id).filter((p) => ['propuesta', 'porcobrar'].includes(estado(p.estado).grupo));
+        const total = abiertos.reduce((t, p) => t + (Number(p.monto) || 0), 0);
+        return `<div class="card" data-open-contact="${esc(c.id)}" role="button" tabindex="0">
+          <div><div class="name">${esc(c.nombre)}</div><div class="inst">${esc([c.institucion, c.area].filter(Boolean).join(' · '))}</div></div>
+          ${c.proximoPaso ? `<div class="next"><span>${esc(c.proximoPaso)}</span></div>` : ''}
+          <div class="foot">
+            <span>${c.proximaFecha ? fechaChip(c.proximaFecha) : ''}${abiertos.length ? ` <span class="chip later" title="Proyectos abiertos">${esc(clp(total))}</span>` : ''}</span>
+            <span class="moves">
+              <button type="button" data-move="${esc(c.id)}" data-dir="-1" aria-label="Mover a la etapa anterior" ${i === 0 || !canWrite ? 'disabled' : ''}>‹</button>
+              <button type="button" data-move="${esc(c.id)}" data-dir="1" aria-label="Mover a la etapa siguiente" ${i === ETAPAS.length - 1 || !canWrite ? 'disabled' : ''}>›</button>
+            </span>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="col"><div class="col-head"><span class="eyebrow">${esc(e.label)}</span><span class="num muted">${list.length}</span></div>${cards || `<div class="col-empty">${i === 0 ? 'Agrega académicos que quieras contactar con “+ Contacto”.' : 'Sin contactos en esta etapa.'}</div>`}</div>`;
+    }).join('');
+  }
+
+  function renderProjects() {
+    const f = $('#filter-estado').value;
+    const ordenEstado = (id) => ESTADOS.findIndex((e) => e.id === id);
+    const ps = proyectos().filter((p) => !f || p.estado === f).sort((a, b) => ordenEstado(a.estado) - ordenEstado(b.estado) || (a.fechaEntrega || '9999').localeCompare(b.fechaEntrega || '9999'));
+    const body = $('#proj-body');
+    if (!ps.length) {
+      body.innerHTML = `<tr><td colspan="7" class="muted">${S.proyectos.size ? 'Ningún proyecto con ese estado.' : 'Todavía no hay proyectos. Crea el primero con “+ Proyecto”.'}</td></tr>`;
+      $('#proj-total').textContent = clp(0);
+      return;
+    }
+    body.innerHTML = ps.map((p) => {
+      const c = S.contactos.get(p.contactoId);
+      const sv = servicio(p.servicio);
+      const incl = p.sinCosto ? `<span class="incl">Incluido · valor ${esc(clp(p.valorReferencia))}</span>` : '';
+      return `<tr>
+        <td><button class="linkish" type="button" data-open-project="${esc(p.id)}">${esc(p.titulo || sv?.label || 'Proyecto')}</button></td>
+        <td>${c ? `<button class="linkish" style="font-weight:400" type="button" data-open-contact="${esc(c.id)}">${esc(c.nombre)}</button>` : '<span class="muted">—</span>'}</td>
+        <td class="muted">${esc(sv?.label || '')}</td>
+        <td class="r num">${esc(clp(p.monto))}${incl}</td>
+        <td><span class="pill st-${esc(p.estado)}">${esc(estado(p.estado).label)}</span></td>
+        <td>${p.fechaEntrega ? esc(fmtDate(p.fechaEntrega)) : '<span class="muted">—</span>'}</td>
+        <td class="muted">${esc(p.fondo || '')}</td>
+      </tr>`;
+    }).join('');
+    $('#proj-total').textContent = clp(ps.filter((p) => p.estado !== 'perdido').reduce((t, p) => t + (Number(p.monto) || 0), 0));
+  }
+
+  function renderAgenda() {
+    const list = contactos().filter((c) => c.etapa !== 'pausa' && c.proximoPaso);
+    const groups = [
+      { t: 'Vencidos', f: (n) => n != null && n < 0 },
+      { t: 'Próximos 7 días', f: (n) => n != null && n >= 0 && n <= 7 },
+      { t: 'Más adelante', f: (n) => n != null && n > 7 },
+      { t: 'Sin fecha', f: (n) => n == null },
+    ];
+    const el = $('#view-agenda');
+    if (!list.length) { el.innerHTML = `<div class="empty">Cuando un contacto tenga un “próximo paso”, aparece aquí ordenado por fecha.</div>`; return; }
+    el.innerHTML = groups.map((g) => {
+      const items = list.filter((c) => g.f(diasHasta(c.proximaFecha))).sort((a, b) => (a.proximaFecha || '').localeCompare(b.proximaFecha || ''));
+      if (!items.length) return '';
+      return `<section><h3 class="eyebrow">${g.t} · ${items.length}</h3>${items.map((c) => `
+        <button class="row" type="button" data-open-contact="${esc(c.id)}">
+          <span>${c.proximaFecha ? fechaChip(c.proximaFecha) : '<span class="chip later">sin fecha</span>'}</span>
+          <span><span>${esc(c.proximoPaso)}</span><br><span class="who">${esc(c.nombre)} · ${esc(etapaLabel(c.etapa))}</span></span>
+        </button>`).join('')}</section>`;
+    }).join('');
+  }
+
+  function renderAll() {
+    renderKpis(); renderBoard(); renderProjects(); renderAgenda();
+    if (openDrawer?.kind === 'contacto') renderContactSubs(openDrawer.id);
+  }
+
+  // ---------- Panel: contacto ----------
+  function field(name, label, value, opts = {}) {
+    const id = 'f-' + name;
+    if (opts.type === 'select') return `<label class="f ${opts.full ? 'full' : ''}" for="${id}">${label}<select id="${id}" name="${name}">${opts.options.map((o) => `<option value="${esc(o.id)}" ${o.id === value ? 'selected' : ''}>${esc(o.label)}</option>`).join('')}</select></label>`;
+    if (opts.type === 'textarea') return `<label class="f full" for="${id}">${label}<textarea id="${id}" name="${name}">${esc(value)}</textarea></label>`;
+    return `<label class="f ${opts.full ? 'full' : ''}" for="${id}">${label}<input id="${id}" name="${name}" type="${opts.type || 'text'}" value="${esc(value)}" ${opts.placeholder ? `placeholder="${esc(opts.placeholder)}"` : ''} ${opts.required ? 'required' : ''}></label>`;
+  }
+
+  function openContact(id) {
+    const c = id ? S.contactos.get(id) : null;
+    const isNew = !c;
+    openDrawer = { kind: 'contacto', id: isNew ? null : id };
+    $('#drawer-title').textContent = isNew ? 'Nuevo contacto' : c.nombre;
+    const v = c || { etapa: 'prospecto' };
+    $('#drawer-body').innerHTML = `
+      <form class="form" id="contact-form" autocomplete="off">
+        ${field('nombre', 'Nombre', v.nombre, { required: true, full: true, placeholder: 'Ej. Prof. María Pérez' })}
+        ${field('institucion', 'Institución', v.institucion, { placeholder: 'USM, PUCV, UdeC…' })}
+        ${field('area', 'Área / departamento', v.area, { placeholder: 'Química, Materiales…' })}
+        ${field('email', 'Correo', v.email, { type: 'email' })}
+        ${field('telefono', 'Teléfono / WhatsApp', v.telefono)}
+        ${field('etapa', 'Etapa', v.etapa, { type: 'select', options: ETAPAS })}
+        ${field('origen', 'Cómo llegó', v.origen, { placeholder: 'Referido por…, LinkedIn, evento' })}
+        ${field('proximoPaso', 'Próximo paso', v.proximoPaso, { full: true, placeholder: '¿Qué hay que hacer y quién?' })}
+        ${field('proximaFecha', 'Fecha del próximo paso', v.proximaFecha, { type: 'date' })}
+        <div></div>
+        ${field('notas', 'Notas', v.notas, { type: 'textarea' })}
+        <div class="form-actions">
+          <span>${isNew ? '' : '<button class="btn danger" type="button" id="del-contact">Eliminar contacto</button>'}</span>
+          <span style="display:flex;gap:8px;align-items:center"><span id="contact-msg"></span><button class="btn primary" type="submit" ${canWrite ? '' : 'disabled'}>${isNew ? 'Crear contacto' : 'Guardar cambios'}</button></span>
+        </div>
+      </form>
+      <div id="contact-subs"></div>`;
+    showDrawer();
+    $('#contact-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const data = Object.fromEntries(new FormData(ev.target).entries());
+      data.nombre = data.nombre.trim();
+      if (!data.nombre) return;
+      const msg = $('#contact-msg');
+      const ahora = new Date().toISOString();
+      try {
+        if (isNew) {
+          const ref = db.collection('contactos').doc();
+          await ref.set({ ...data, creado: ahora, actualizado: ahora });
+          openContact(ref.id);
+          $('#contact-msg').innerHTML = '<span class="saved">Contacto creado</span>';
+        } else {
+          await db.doc('contactos/' + id).update({ ...data, actualizado: ahora });
+          $('#drawer-title').textContent = data.nombre;
+          msg.innerHTML = '<span class="saved">Guardado</span>';
+        }
+      } catch (e) { msg.innerHTML = `<span class="err">${esc(writeError(e))}</span>`; }
+    });
+    if (!isNew) {
+      armDelete($('#del-contact'), async () => {
+        const acts = actDe(id);
+        for (const a of acts) await db.doc('actividades/' + a.id).delete();
+        await db.doc('contactos/' + id).delete();
+        closeDrawer();
+      }, 'Sí, eliminar contacto e historial');
+      renderContactSubs(id);
+    }
+  }
+
+  function renderContactSubs(id) {
+    const box = $('#contact-subs');
+    if (!box || !S.contactos.has(id)) return;
+    const ps = proyDe(id);
+    const acts = actDe(id);
+    const draft = $('#act-text')?.value || '';
+    const draftTipo = $('#act-tipo')?.value || 'Nota';
+    const draftFecha = $('#act-fecha')?.value || iso(hoy());
+    box.innerHTML = `
+      <section style="display:grid;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><h3>Proyectos</h3><button class="btn small" type="button" id="add-proj-for">+ Proyecto</button></div>
+        <div class="sub-list">${ps.length ? ps.map((p) => `<button class="sub-item" type="button" data-open-project="${esc(p.id)}"><span>${esc(p.titulo || servicio(p.servicio)?.label || 'Proyecto')}<br><span class="pill st-${esc(p.estado)}">${esc(estado(p.estado).label)}</span></span><span class="num">${esc(clp(p.monto))}</span></button>`).join('') : '<span class="hint">Sin proyectos todavía.</span>'}</div>
+      </section>
+      <section style="display:grid;gap:12px;margin-top:22px">
+        <h3>Historial</h3>
+        <form class="quick" id="act-form">
+          <label class="f" for="act-tipo">Tipo<select id="act-tipo">${TIPOS_ACT.map((t) => `<option ${t === draftTipo ? 'selected' : ''}>${t}</option>`).join('')}</select></label>
+          <label class="f" for="act-fecha">Fecha<input id="act-fecha" type="date" value="${esc(draftFecha)}"></label>
+          <label class="f grow" for="act-text">Qué pasó<input id="act-text" type="text" value="${esc(draft)}" placeholder="Ej. Le mandé la cotización del pack postulación"></label>
+          <div class="form-actions" style="justify-content:flex-end"><span id="act-msg"></span><button class="btn" type="submit" ${canWrite ? '' : 'disabled'}>Agregar al historial</button></div>
+        </form>
+        <div class="timeline">${acts.length ? acts.map((a) => `
+          <div class="ev"><div class="meta"><strong>${esc(a.tipo)}</strong><span class="num">${esc(fmtDate(a.fecha))}</span>${a.autorId ? `<span data-uid="${esc(a.autorId)}"></span>` : ''}<button class="btn small danger del" type="button" data-del-act="${esc(a.id)}" ${canWrite ? '' : 'disabled'}>Borrar</button></div><div class="txt">${esc(a.texto)}</div></div>`).join('') : '<div class="ev"><div class="txt muted">Sin registros. Anota reuniones, correos, entregas y pagos.</div></div>'}</div>
+      </section>`;
+    $('#add-proj-for').onclick = () => openProject(null, id);
+    $('#act-form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const texto = $('#act-text').value.trim();
+      if (!texto) return;
+      try {
+        await db.collection('actividades').doc().set({ contactoId: id, tipo: $('#act-tipo').value, fecha: $('#act-fecha').value || iso(hoy()), texto, autorId: myId || null, creado: new Date().toISOString() });
+        const t = $('#act-text'); if (t) t.value = '';
+        renderContactSubs(id);
+      } catch (e) { $('#act-msg').innerHTML = `<span class="err">${esc(writeError(e))}</span>`; }
+    });
+    box.querySelectorAll('[data-del-act]').forEach((b) => armDelete(b, () => db.doc('actividades/' + b.dataset.delAct).delete(), '¿Seguro?'));
+    resolveNames(box);
+  }
+
+  // ---------- Panel: proyecto ----------
+  function openProject(id, contactoId) {
+    const p = id ? S.proyectos.get(id) : null;
+    const isNew = !p;
+    openDrawer = { kind: 'proyecto', id };
+    $('#drawer-title').textContent = isNew ? 'Nuevo proyecto' : (p.titulo || 'Proyecto');
+    const v = p || { contactoId: contactoId || '', estado: 'cotizacion', servicio: 'ga', monto: 150000 };
+    const cs = contactos().sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
+    if (!cs.length) {
+      $('#drawer-body').innerHTML = `<div class="empty">Primero crea el contacto (cliente) al que pertenece el proyecto.</div><button class="btn primary" type="button" id="go-new-contact">+ Contacto</button>`;
+      showDrawer();
+      $('#go-new-contact').onclick = () => openContact(null);
+      return;
+    }
+    $('#drawer-body').innerHTML = `
+      <form class="form" id="proj-form" autocomplete="off">
+        ${field('titulo', 'Nombre del proyecto', v.titulo, { full: true, required: true, placeholder: 'Ej. GA paper Ag-TiO₂' })}
+        ${field('contactoId', 'Cliente', v.contactoId, { type: 'select', options: cs.map((c) => ({ id: c.id, label: c.nombre })) })}
+        ${field('servicio', 'Servicio', v.servicio, { type: 'select', options: CATALOGO })}
+        ${field('monto', 'Monto a cobrar (CLP)', v.monto ?? '', { type: 'number' })}
+        ${field('estado', 'Estado', v.estado, { type: 'select', options: ESTADOS })}
+        <label class="check full"><input type="checkbox" id="f-sinCosto" name="sinCosto" ${v.sinCosto ? 'checked' : ''}> Sin costo (se muestra como “incluido” con su valor)</label>
+        <p class="hint full" id="precio-hint"></p>
+        ${field('fechaEntrega', 'Fecha de entrega', v.fechaEntrega, { type: 'date' })}
+        ${field('fondo', 'Fondo / forma de pago', v.fondo, { placeholder: 'FONDECYT 1240601, boleta…' })}
+        ${field('notas', 'Notas', v.notas, { type: 'textarea' })}
+        <div class="form-actions">
+          <span>${isNew ? '' : '<button class="btn danger" type="button" id="del-proj">Eliminar proyecto</button>'}</span>
+          <span style="display:flex;gap:8px;align-items:center"><span id="proj-msg"></span><button class="btn primary" type="submit" ${canWrite ? '' : 'disabled'}>${isNew ? 'Crear proyecto' : 'Guardar cambios'}</button></span>
+        </div>
+      </form>`;
+    showDrawer();
+    const form = $('#proj-form');
+    const montoEl = $('#f-monto'), servEl = $('#f-servicio'), sinEl = $('#f-sinCosto');
+    let valorRef = v.valorReferencia ?? null;
+    function hint() {
+      const s = servicio(servEl.value);
+      $('#precio-hint').textContent = s?.lanz ? `Catálogo: normal ${clp(s.normal)} · lanzamiento ${clp(s.lanz)} (vigente hasta jun-2027 o los primeros 5 clientes).` : 'Sin precio de catálogo: monto a medida.';
+    }
+    hint();
+    servEl.addEventListener('change', () => { const s = servicio(servEl.value); if (s?.lanz) { valorRef = s.lanz; if (!sinEl.checked) montoEl.value = s.lanz; } hint(); });
+    sinEl.addEventListener('change', () => { if (sinEl.checked) { valorRef = Number(montoEl.value) || servicio(servEl.value)?.lanz || valorRef; montoEl.value = 0; } else { montoEl.value = valorRef ?? ''; } });
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const fd = Object.fromEntries(new FormData(form).entries());
+      const data = { ...fd, titulo: fd.titulo.trim(), monto: Number(fd.monto) || 0, sinCosto: sinEl.checked, valorReferencia: sinEl.checked ? (valorRef ?? null) : null, actualizado: new Date().toISOString() };
+      const msg = $('#proj-msg');
+      try {
+        if (isNew) {
+          const ref = db.collection('proyectos').doc();
+          await ref.set({ ...data, creado: data.actualizado });
+          openProject(ref.id);
+          $('#proj-msg').innerHTML = '<span class="saved">Proyecto creado</span>';
+        } else {
+          await db.doc('proyectos/' + id).update(data);
+          $('#drawer-title').textContent = data.titulo;
+          msg.innerHTML = '<span class="saved">Guardado</span>';
+        }
+      } catch (e) { msg.innerHTML = `<span class="err">${esc(writeError(e))}</span>`; }
+    });
+    if (!isNew) armDelete($('#del-proj'), async () => { await db.doc('proyectos/' + id).delete(); closeDrawer(); }, 'Sí, eliminar');
+  }
+
+  // ---------- Panel genérico ----------
+  let lastFocus = null;
+  function showDrawer() {
+    if ($('#drawer').hidden) lastFocus = document.activeElement;
+    $('#drawer').hidden = false; $('#scrim').hidden = false;
+    setTimeout(() => $('#drawer-body input, #drawer-body select, #drawer-body button')?.focus(), 30);
+  }
+  function closeDrawer() {
+    $('#drawer').hidden = true; $('#scrim').hidden = true; openDrawer = null;
+    lastFocus?.focus?.();
+  }
+  $('#drawer-close').onclick = closeDrawer;
+  $('#scrim').onclick = closeDrawer;
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#drawer').hidden) closeDrawer(); });
+
+  function armDelete(btn, action, confirmText) {
+    if (!btn) return;
+    const original = btn.textContent;
+    let timer = null;
+    btn.addEventListener('click', async () => {
+      if (!canWrite) return;
+      if (!btn.classList.contains('armed')) {
+        btn.classList.add('armed'); btn.textContent = confirmText;
+        timer = setTimeout(() => { btn.classList.remove('armed'); btn.textContent = original; }, 4000);
+        return;
+      }
+      clearTimeout(timer); btn.disabled = true;
+      try { await action(); } catch (e) { btn.disabled = false; btn.textContent = writeError(e); }
+    });
+  }
+
+  function writeError(e) {
+    if (e?.code === 'invalid_argument') { canWrite = false; return 'No tienes permiso para editar este CRM (pide acceso de Editor).'; }
+    if (e?.code === 'quota_exceeded') return 'La base está llena: borra registros antiguos.';
+    return 'No se pudo guardar. Revisa la conexión e inténtalo de nuevo.';
+  }
+
+  async function resolveNames(root) {
+    const els = [...root.querySelectorAll('[data-uid]')];
+    if (!els.length || !user?.profiles) return;
+    const ids = [...new Set(els.map((e) => e.dataset.uid))].filter((i) => !names.has(i));
+    if (ids.length) {
+      try { const ps = await user.profiles(ids); ids.forEach((i) => names.set(i, ps?.[i]?.name || '')); } catch { /* sin nombres */ }
+    }
+    els.forEach((e) => { const n = names.get(e.dataset.uid); e.textContent = n ? '· ' + n : ''; });
+  }
+
+  // ---------- Delegación de clics ----------
+  document.addEventListener('click', async (e) => {
+    const mv = e.target.closest('[data-move]');
+    if (mv) {
+      e.stopPropagation();
+      const c = S.contactos.get(mv.dataset.move);
+      const i = ETAPAS.findIndex((x) => x.id === c?.etapa);
+      const next = ETAPAS[i + Number(mv.dataset.dir)];
+      if (!c || !next) return;
+      mv.disabled = true;
+      try { await db.doc('contactos/' + c.id).update({ etapa: next.id, actualizado: new Date().toISOString() }); }
+      catch (err) { setStatus(writeError(err)); mv.disabled = false; }
+      return;
+    }
+    const oc = e.target.closest('[data-open-contact]');
+    if (oc) { openContact(oc.dataset.openContact); return; }
+    const op = e.target.closest('[data-open-project]');
+    if (op) { openProject(op.dataset.openProject); return; }
+  });
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches?.('.card[data-open-contact]')) { e.preventDefault(); openContact(e.target.dataset.openContact); }
+  });
+  $('#btn-new-contact').onclick = () => openContact(null);
+  $('#btn-new-project').onclick = () => openProject(null);
+  $('#filter-estado').innerHTML += ESTADOS.map((s) => `<option value="${s.id}">${esc(s.label)}</option>`).join('');
+  $('#filter-estado').addEventListener('change', renderProjects);
+
+  // ---------- Arranque ----------
+  showView();
+  renderAll();
+  (async () => {
+    db = await Promise.resolve(window.claude?.use?.('db') ?? null).catch(() => null);
+    if (!db) {
+      setStatus('No hay conexión con la base de datos. Abre el CRM desde claude.ai con tu sesión iniciada.');
+      canWrite = false; renderAll();
+      $('#btn-new-contact').disabled = true; $('#btn-new-project').disabled = true;
+      return;
+    }
+    try {
+      user = await window.claude.use('user');
+      myId = user ? await user.id() : null;
+      const w = user ? await user.can('data.write') : null;
+      if (w === false) { canWrite = false; $('#btn-new-contact').disabled = true; $('#btn-new-project').disabled = true; }
+    } catch { /* sin identidad: se sigue sin autor */ }
+
+    const timer = setTimeout(() => setStatus('La base de datos todavía no responde. Lo que ves puede estar desactualizado.'), 10000);
+    const done = () => {
+      if (S.ready.contactos && S.ready.proyectos && S.ready.actividades) {
+        clearTimeout(timer);
+        setStatus(canWrite ? '' : 'Solo lectura: puedes ver el CRM pero no editarlo.');
+      }
+    };
+    for (const col of ['contactos', 'proyectos', 'actividades']) {
+      db.collection(col).onSnapshot((snap) => {
+        const m = new Map();
+        snap.docs.forEach((d) => m.set(d.id, { id: d.id, ...d.data() }));
+        S[col] = m;
+        if (!snap.metadata.fromCache) S.ready[col] = true;
+        renderAll(); done();
+      }, (err) => {
+        clearTimeout(timer);
+        setStatus(err.code === 'revoked' ? 'Se perdió el acceso a los datos.' : 'No se pudieron cargar los datos (' + col + ').');
+      });
+    }
+  })();
+})();
+</script>

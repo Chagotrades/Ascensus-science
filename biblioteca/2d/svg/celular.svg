@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Ascensus Science Visuals · 2d/celular · estado: grafico -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 130" width="70" height="130" role="img" aria-label="phone"><title>phone</title><rect x="3" y="3" width="64" height="124" rx="12" fill="#1a2333"/><rect x="9" y="16" width="52" height="96" rx="4" fill="#e8eef8"/>
+<polyline points="14,80.6 24.5,62.6 32.9,72.6 39.2,54.6 47.6,66.6 56,50.6" fill="none" stroke="#3da5ff" stroke-width="2.5"/>
+<circle cx="35" cy="120" r="3" fill="#5a6578"/></svg>
